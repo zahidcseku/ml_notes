@@ -36,7 +36,7 @@ up our sleeves and explore the magic of algorithms!
 ```{tableofcontents}
 ```
 
-{% if page.comments %}
+
 <div id="disqus_thread"></div>
 <script>
     /**
@@ -56,6 +56,6 @@ up our sleeves and explore the magic of algorithms!
     })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-{% endif %}
+
 
 <script id="dsq-count-scr" src="//https-zahidcseku-github-io-ml-notes.disqus.com/count.js" async></script>
