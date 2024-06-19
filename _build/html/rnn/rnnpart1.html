@@ -63,7 +63,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Markdown Files" href="../markdown.html" />
-    <link rel="prev" title="Unlocking the Magic of Machine Learning: A Beginner’s Journey" href="../intro.html" />
+    <link rel="prev" title="Deep neural network notation" href="../notations/notations.html" />
   <meta name="viewport" content="width=device-width, initial-scale=1"/>
   <meta name="docsearch:language" content="en"/>
   </head>
@@ -180,6 +180,7 @@
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
+<li class="toctree-l1"><a class="reference internal" href="../notations/notations.html">Deep neural network notation</a></li>
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Disentangling the LSTM model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../markdown.html">Markdown Files</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Content with notebooks</a></li>
@@ -400,18 +401,24 @@ much from those sources (I listed a few at the end). I encourage everyone to rea
 many sources as possible.</p>
 <p>I assume that you are convinced that LSTM is good for sequence data and can memorise the
 order in sequence data. If you are not familiar with this please read <a class="reference external" href="https://karpathy.github.io/2015/05/21/rnn-effectiveness/"><strong>The Unreasonable Effectiveness
-of Recurrent Neural Networks</strong></a> and <a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">**Understanding
-LSTM Networks</a>.** More than <span class="math notranslate nohighlight">\(90\%\)</span> resources on
+of Recurrent Neural Networks</strong></a> and <a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/"><strong>Understanding
+LSTM Networks</strong></a>. More than <span class="math notranslate nohighlight">\(90\%\)</span> resources on
 RNN and LSTM include one of the figures (or a variation of them) shown below.</p>
-<a class="reference internal image-reference" href="../_images/figure1.png"><img alt="../_images/figure1.png" class="align-center" src="../_images/figure1.png" style="width: 500px;" /></a>
-<p>(Image sources:  [<strong>The Unreasonable Effectiveness of Recurrent Neural Networks]
-(<a class="reference external" href="https://karpathy.github.io/2015/05/21/rnn-effectiveness/">https://karpathy.github.io/2015/05/21/rnn-effectiveness/</a>),</strong>  [<strong>Understanding LSTM Networks</strong>]
-(<a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a>))</p>
-<p><strong>Figure 1</strong>: The most common illustrations on RNN and LSTM. (a) Time unrolled RNN model showing how RNNs process
+<figure class="align-center" id="figure1">
+<a class="reference internal image-reference" href="../_images/figure1.png"><img alt="../_images/figure1.png" src="../_images/figure1.png" style="width: 450px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">The most common illustrations on RNN and LSTM. (a) Time unrolled RNN model showing how RNNs process
 inputs sequentially. Remember there is a single network processing the inputs. This image is illustrating the
 recurrence relations among the inputs. (b) The inner connections in the LSTM model. (c) Showing variations of RNNs
 based of the number of inputs and outputs. I will not discuss about all the variations in this article. I will
-only mention in which category our examples belong.</p>
+only mention in which category our examples belong.</span><a class="headerlink" href="#figure1" title="Link to this image">#</a></p>
+<div class="legend">
+<p>Image sources: [<strong>The Unreasonable Effectiveness of Recurrent Neural Networks</strong>]
+(<a class="reference external" href="https://karpathy.github.io/2015/05/21/rnn-effectiveness/">https://karpathy.github.io/2015/05/21/rnn-effectiveness/</a>),  [<strong>Understanding LSTM Networks</strong>]
+(<a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/">https://colah.github.io/posts/2015-08-Understanding-LSTMs/</a>)</p>
+</div>
+</figcaption>
+</figure>
 </section>
 
     <script type="text/x-thebe-config">
@@ -445,12 +452,12 @@ only mention in which category our examples belong.</p>
                   
 <div class="prev-next-area">
     <a class="left-prev"
-       href="../intro.html"
+       href="../notations/notations.html"
        title="previous page">
       <i class="fa-solid fa-angle-left"></i>
       <div class="prev-next-info">
         <p class="prev-next-subtitle">previous</p>
-        <p class="prev-next-title">Unlocking the Magic of Machine Learning: A Beginner’s Journey</p>
+        <p class="prev-next-title">Deep neural network notation</p>
       </div>
     </a>
     <a class="right-next"

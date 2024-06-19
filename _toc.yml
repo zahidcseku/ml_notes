@@ -4,7 +4,8 @@
 format: jb-book
 root: intro
 chapters:
-- file: rnn/rnnpart1.md
+- file: notations/notations
+- file: rnn/rnnpart1
 - file: markdown
 - file: notebooks
 - file: markdown-notebooks
