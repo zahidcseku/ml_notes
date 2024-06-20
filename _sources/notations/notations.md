@@ -76,8 +76,10 @@ Now that we have multiple units, we cannot express the weights as a vector anymo
 
 $a^{[l]}_0 = \sigma^{[l]} (z^{[l]}_0) = \sigma^{[l]} \left(w^{[l]}_{00}x_0 + w^{[l]}_{01}x_1+\dots+w^{[l]}_{0n_X}x_{n_X}+b^{[l]}_0\right) = \sigma^{[l]} \left(\sum_i^{n_X} w^{[l]}_{0i}x^i + b^{[l]}_0\right)$
 
-$a^{[l]}_1 = \sigma^{[l]} (z^{[l]}_1) = \sigma^{[l]} \left(w^{[l]}_{10}x_0 + w^{[l]}_{11}x_1+\dots+w^{[l]}_{1n_X}x_{n_X}+b^{[l]}_1\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{1i}x_i + b^{[l]}_1\right)$
+$a^{[l]}_1 = \sigma^{[l]} (z^{[l]}_1) = \sigma^{[l]} \left(w^{[l]}_{10}x_0 + w^{[l]}_{11}x_1+\dots+w^{[l]}_{1n_X}x_{n_X}+b^{[l]}_1\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{1i}x_i + b^{[l]}_1\right$
+
 $\cdots$
+
 $a^{[l]}_{n^{[l]}} = \sigma^{[l]} (z^{[l]}_{n^{[l]}}) = \sigma^{[l]} \left(w^{[l]}_{n^{[l]}0}x_0 + w^{[l]}_{n^{[l]}1}x_1+\dots+w^{[l]}_{n^{[l]}n_X}x_{n_X}+b^{[l]}_{n^{[l]}}\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{n^{[l]}i}x_i + b^{[l]}_{n^{[l]}}\right)$
 
 ```{code-cell}
@@ -94,9 +96,7 @@ for i in range(nl):
 
 The weights of the matrix can be represented by:
 
-$$
-\mathbf W^{[l]} = \begin{bmatrix} w^{[l]}_{00} & w^{[l]}_{01} & \cdots & w^{[l]}_{0n_X}\\ w^{[l]}_{10} & w^{[l]}_{11} & \cdots & w^{[l]}_{1n_X}\\\cdots&\cdots&\cdots&\cdots\\w^{[l]}_{n^{[l]}0} & w^{[l]}_{n^{[l]}1} & \cdots & w^{[l]}_{n^{[l]}n_X}\end{bmatrix}
-$$
+$\mathbf W^{[l]} = \begin{bmatrix} w^{[l]}_{00} & w^{[l]}_{01} & \cdots & w^{[l]}_{0n_X}\\ w^{[l]}_{10} & w^{[l]}_{11} & \cdots & w^{[l]}_{1n_X}\\\cdots&\cdots&\cdots&\cdots\\w^{[l]}_{n^{[l]}0} & w^{[l]}_{n^{[l]}1} & \cdots & w^{[l]}_{n^{[l]}n_X}\end{bmatrix}$
 
 The dimension of $\mathbf W^{[l]}$ depends on the input dimension $n_X$ and the number of units (which is same as the output dimension of the layer) $n^{[l]}$ i.e., $(n^{[l]}, n_X)$. Using the matrix notations, the computations are:
 
