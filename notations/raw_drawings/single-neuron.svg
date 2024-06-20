@@ -27,15 +27,15 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
-     inkscape:zoom="2.0103078"
-     inkscape:cx="152.96165"
-     inkscape:cy="92.025709"
+     inkscape:zoom="1.89314"
+     inkscape:cx="105.64459"
+     inkscape:cy="100.36236"
      inkscape:window-width="1232"
      inkscape:window-height="715"
-     inkscape:window-x="220"
-     inkscape:window-y="38"
+     inkscape:window-x="2196"
+     inkscape:window-y="166"
      inkscape:window-maximized="0"
-     inkscape:current-layer="g22"
+     inkscape:current-layer="g23"
      showguides="true">
     <sodipodi:guide
        position="227.50529,-104.28557"
@@ -266,6 +266,28 @@
              cy="137.68925"
              rx="1"
              ry="1.0000001" />
+          <g
+             id="g11"
+             transform="translate(4.6791316,0.35901304)">
+            <circle
+               style="fill:#aa0000;stroke:none;stroke-width:0.0874982"
+               id="path3-3-3"
+               cx="218.0047"
+               cy="141.11237"
+               r="0.46667525" />
+            <circle
+               style="fill:#aa0000;stroke:none;stroke-width:0.0874982"
+               id="path3-3-3-3"
+               cx="218.0047"
+               cy="142.85156"
+               r="0.46667525" />
+            <circle
+               style="fill:#aa0000;stroke:none;stroke-width:0.0874982"
+               id="path3-3-3-7"
+               cx="218.00453"
+               cy="144.48349"
+               r="0.46667525" />
+          </g>
           <ellipse
              style="fill:#aa0000;stroke:none;stroke-width:0.187492"
              id="path3-3-8"
@@ -689,53 +711,6 @@
              inkscape:connector-curvature="0"
              inkscape:connection-start="#path3-5"
              inkscape:connection-end="#g4" />
-          <text
-             xml:space="preserve"
-             style="font-weight:300;font-size:5.64441px;line-height:3.28083px;font-family:'.Apple SD Gothic NeoI';-inkscape-font-specification:'.Apple SD Gothic NeoI, Light';text-align:center;text-anchor:middle;fill:#4d4d4d;fill-opacity:0;fill-rule:evenodd;stroke:#780000;stroke-width:0.3"
-             x="219.72629"
-             y="140.03159"
-             id="text45"><tspan
-               sodipodi:role="line"
-               id="tspan45"
-               style="line-height:3.28083px;stroke-width:0.3"
-               x="219.72629"
-               y="140.03159">.</tspan><tspan
-               sodipodi:role="line"
-               style="line-height:3.28083px;stroke-width:0.3"
-               x="219.72629"
-               y="143.31241"
-               id="tspan46">.</tspan><tspan
-               sodipodi:role="line"
-               style="line-height:3.28083px;stroke-width:0.3"
-               x="219.72629"
-               y="146.59325"
-               id="tspan47">.</tspan></text>
-          <text
-             xml:space="preserve"
-             style="font-weight:300;font-size:5.64441px;line-height:0;font-family:'.Apple SD Gothic NeoI';-inkscape-font-specification:'.Apple SD Gothic NeoI, Light';text-align:center;text-anchor:middle;fill:#000000;fill-opacity:0.211765;fill-rule:evenodd;stroke:#780000;stroke-width:0.3"
-             x="224.77055"
-             y="140.22162"
-             id="text48"><tspan
-               sodipodi:role="line"
-               id="tspan48"
-               style="line-height:3.06917px;fill:#000000;fill-opacity:0.211765;stroke-width:0.3"
-               x="224.77055"
-               y="140.22162" /><tspan
-               sodipodi:role="line"
-               style="font-size:4.23333px;line-height:1.5875px;fill:#000000;fill-opacity:0.211765;stroke:#050000;stroke-width:0.3;stroke-opacity:1"
-               x="224.77055"
-               y="142.19719"
-               id="tspan49">.</tspan><tspan
-               sodipodi:role="line"
-               style="font-size:4.23333px;line-height:1.5875px;fill:#000000;fill-opacity:0.211765;stroke:#050000;stroke-width:0.3;stroke-opacity:1"
-               x="224.77055"
-               y="143.78468"
-               id="tspan50">.</tspan><tspan
-               sodipodi:role="line"
-               style="font-size:4.23333px;line-height:1.5875px;fill:#000000;fill-opacity:0.211765;stroke:#050000;stroke-width:0.3;stroke-opacity:1"
-               x="224.77055"
-               y="145.37218"
-               id="tspan51">.</tspan></text>
           <g
              transform="matrix(0.352778,0,0,0.352778,255.70516,153.22074)"
              ns1:version="1.10.2"
