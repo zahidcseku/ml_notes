@@ -17,15 +17,15 @@ A single neural processing unit.
 
 The output of the neuron is computed in two steps. For an instance $\mathbf X$, first a weighted sum is computed as: 
 
-$z = x_0*w_0 + x_1*w_1 + \cdots + x_n*w_{n_X} + b = \sum_{i=0}^{n_X}x_i*w_i +b$ 
+$$z = x_0*w_0 + x_1*w_1 + \cdots + x_n*w_{n_X} + b = \sum_{i=0}^{n_X}x_i*w_i +b$$
 
 and then an activation function $\sigma$ is applied to $z$ to compute the output (called activation) as:
 
-$a = \sigma\left(z\right)$ 
+$$a = \sigma\left(z\right)$$
 
 If we organise the weights as a row vector $\mathbf W = [w_0, w_1, \cdots, w_{n_X}]$  and our input as a row vector $\mathbf X =[x_1, x_2,\dots,x_{n_X}]$, we can achive the same result using vector operation:
 
-$a = \sigma(z) = \sigma(\mathbf W \cdot \mathbf X^\top +b)$.
+$$a = \sigma(z) = \sigma(\mathbf W \cdot \mathbf X^\top+b).$$
 
 **Shapes**: both the $\mathbf W$ and $\mathbf X$ are row vectors of shape $(1, n_X)$ and both $z$ and $a$ are scalars.
 
@@ -74,15 +74,16 @@ A single layer processing unit.
 
 Now that we have multiple units, we cannot express the weights as a vector anymore. The weights of each individual unit in the layer are still a vector (shape $(1, n_X)$) and we need a matrix (by stacking the vectors) to express the weights of layer $l$. For $n^{[l]}$ units we will have  $n^{[l]}$ biases expressed as $\mathbf b^{[l]}$ which is a vector of shape $(n^{[l]}, 1)$.  We have multiple outputs from a layer, hence both $a$ and $z$ are now vectors or shape $(n^{[l]}, 1)$ and represented by: $\mathbf z^{[l]}$ and $\mathbf a^{[l]}$. Layer $l$ performs the following operations:
 
-$a^{[l]}_0 = \sigma^{[l]} (z^{[l]}_0) = \sigma^{[l]} \left(w^{[l]}_{00}x_0 + w^{[l]}_{01}x_1+\dots+w^{[l]}_{0n_X}x_{n_X}+b^{[l]}_0\right) = \sigma^{[l]} \left(\sum_i^{n_X} w^{[l]}_{0i}x^i + b^{[l]}_0\right)$
+$$a^{[l]}_0 = \sigma^{[l]} (z^{[l]}_0) = \sigma^{[l]} \left(w^{[l]}_{00}x_0 + w^{[l]}_{01}x_1+\dots+w^{[l]}_{0n_X}x_{n_X}+b^{[l]}_0\right) = \sigma^{[l]} \left(\sum_i^{n_X} w^{[l]}_{0i}x^i + b^{[l]}_0\right)$$
 
-$a^{[l]}_1 = \sigma^{[l]} (z^{[l]}_1) = \sigma^{[l]} \left(w^{[l]}_{10}x_0 + w^{[l]}_{11}x_1+\dots+w^{[l]}_{1n_X}x_{n_X}+b^{[l]}_1\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{1i}x_i + b^{[l]}_1\right$
+$$a^{[l]}_1 = \sigma^{[l]} (z^{[l]}_1) = \sigma^{[l]} \left(w^{[l]}_{10}x_0 + w^{[l]}_{11}x_1+\dots+w^{[l]}_{1n_X}x_{n_X}+b^{[l]}_1\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{1i}x_i + b^{[l]}_1\right)$$
 
-$\cdots$
+$$\cdots$$
 
-$a^{[l]}_{n^{[l]}} = \sigma^{[l]} (z^{[l]}_{n^{[l]}}) = \sigma^{[l]} \left(w^{[l]}_{n^{[l]}0}x_0 + w^{[l]}_{n^{[l]}1}x_1+\dots+w^{[l]}_{n^{[l]}n_X}x_{n_X}+b^{[l]}_{n^{[l]}}\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{n^{[l]}i}x_i + b^{[l]}_{n^{[l]}}\right)$
+$$a^{[l]}_{n^{[l]}} = \sigma^{[l]} (z^{[l]}_{n^{[l]}}) = \sigma^{[l]} \left(w^{[l]}_{n^{[l]}0}x_0 + w^{[l]}_{n^{[l]}1}x_1+\dots+w^{[l]}_{n^{[l]}n_X}x_{n_X}+b^{[l]}_{n^{[l]}}\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{n^{[l]}i}x_i + b^{[l]}_{n^{[l]}}\right)$$
 
-```{code-cell}
+
+```python
 output = []
 for i in range(nl):
 	z = []
@@ -96,11 +97,11 @@ for i in range(nl):
 
 The weights of the matrix can be represented by:
 
-$\mathbf W^{[l]} = \begin{bmatrix} w^{[l]}_{00} & w^{[l]}_{01} & \cdots & w^{[l]}_{0n_X}\\ w^{[l]}_{10} & w^{[l]}_{11} & \cdots & w^{[l]}_{1n_X}\\\cdots&\cdots&\cdots&\cdots\\w^{[l]}_{n^{[l]}0} & w^{[l]}_{n^{[l]}1} & \cdots & w^{[l]}_{n^{[l]}n_X}\end{bmatrix}$
+$$\mathbf W^{[l]} = \begin{bmatrix} w^{[l]}_{00} & w^{[l]}_{01} & \cdots & w^{[l]}_{0n_X}\\ w^{[l]}_{10} & w^{[l]}_{11} & \cdots & w^{[l]}_{1n_X}\\\cdots&\cdots&\cdots&\cdots\\w^{[l]}_{n^{[l]}0} & w^{[l]}_{n^{[l]}1} & \cdots & w^{[l]}_{n^{[l]}n_X}\end{bmatrix}$$
 
 The dimension of $\mathbf W^{[l]}$ depends on the input dimension $n_X$ and the number of units (which is same as the output dimension of the layer) $n^{[l]}$ i.e., $(n^{[l]}, n_X)$. Using the matrix notations, the computations are:
 
-$\mathbf a^{[l]} = \sigma^{[l]} (\mathbf z^{[l]}) = \sigma^{[l]}\left(\mathbf W^{[l]} \cdot \mathbf X^\top + \mathbf b^{[l]}\right)$
+$$\mathbf a^{[l]} = \sigma^{[l]} (\mathbf z^{[l]}) = \sigma^{[l]}\left(\mathbf W^{[l]} \cdot \mathbf X^\top + \mathbf b^{[l]}\right)$$
 
 ```{list-table} Notations - single layer
 :header-rows: 1
