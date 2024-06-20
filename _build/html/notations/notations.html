@@ -406,11 +406,14 @@ document.write(`
 </figcaption>
 </figure>
 <p>The output of the neuron is computed in two steps. For an instance <span class="math notranslate nohighlight">\(\mathbf X\)</span>, first a weighted sum is computed as:</p>
-<p><span class="math notranslate nohighlight">\(z = x_0*w_0 + x_1*w_1 + \cdots + x_n*w_{n_X} + b = \sum_{i=0}^{n_X}x_i*w_i +b\)</span></p>
+<div class="math notranslate nohighlight">
+\[z = x_0*w_0 + x_1*w_1 + \cdots + x_n*w_{n_X} + b = \sum_{i=0}^{n_X}x_i*w_i +b\]</div>
 <p>and then an activation function <span class="math notranslate nohighlight">\(\sigma\)</span> is applied to <span class="math notranslate nohighlight">\(z\)</span> to compute the output (called activation) as:</p>
-<p><span class="math notranslate nohighlight">\(a = \sigma\left(z\right)\)</span></p>
+<div class="math notranslate nohighlight">
+\[a = \sigma\left(z\right)\]</div>
 <p>If we organise the weights as a row vector <span class="math notranslate nohighlight">\(\mathbf W = [w_0, w_1, \cdots, w_{n_X}]\)</span>  and our input as a row vector <span class="math notranslate nohighlight">\(\mathbf X =[x_1, x_2,\dots,x_{n_X}]\)</span>, we can achive the same result using vector operation:</p>
-<p><span class="math notranslate nohighlight">\(a = \sigma(z) = \sigma(\mathbf W \cdot \mathbf X^\top +b)\)</span>.</p>
+<div class="math notranslate nohighlight">
+\[a = \sigma(z) = \sigma(\mathbf W \cdot \mathbf X^\top+b).\]</div>
 <p><strong>Shapes</strong>: both the <span class="math notranslate nohighlight">\(\mathbf W\)</span> and <span class="math notranslate nohighlight">\(\mathbf X\)</span> are row vectors of shape <span class="math notranslate nohighlight">\((1, n_X)\)</span> and both <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(a\)</span> are scalars.</p>
 <div class="pst-scrollable-table-container"><table class="table" id="notation-single-neuron">
 <caption><span class="caption-number">Table 1 </span><span class="caption-text">Notations - single neuron</span><a class="headerlink" href="#notation-single-neuron" title="Link to this table">#</a></caption>
@@ -463,14 +466,31 @@ document.write(`
 </figcaption>
 </figure>
 <p>Now that we have multiple units, we cannot express the weights as a vector anymore. The weights of each individual unit in the layer are still a vector (shape <span class="math notranslate nohighlight">\((1, n_X)\)</span>) and we need a matrix (by stacking the vectors) to express the weights of layer <span class="math notranslate nohighlight">\(l\)</span>. For <span class="math notranslate nohighlight">\(n^{[l]}\)</span> units we will have  <span class="math notranslate nohighlight">\(n^{[l]}\)</span> biases expressed as <span class="math notranslate nohighlight">\(\mathbf b^{[l]}\)</span> which is a vector of shape <span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span>.  We have multiple outputs from a layer, hence both <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(z\)</span> are now vectors or shape <span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span> and represented by: <span class="math notranslate nohighlight">\(\mathbf z^{[l]}\)</span> and <span class="math notranslate nohighlight">\(\mathbf a^{[l]}\)</span>. Layer <span class="math notranslate nohighlight">\(l\)</span> performs the following operations:</p>
-<p><span class="math notranslate nohighlight">\(a^{[l]}_0 = \sigma^{[l]} (z^{[l]}_0) = \sigma^{[l]} \left(w^{[l]}_{00}x_0 + w^{[l]}_{01}x_1+\dots+w^{[l]}_{0n_X}x_{n_X}+b^{[l]}_0\right) = \sigma^{[l]} \left(\sum_i^{n_X} w^{[l]}_{0i}x^i + b^{[l]}_0\right)\)</span></p>
-<p><span class="math notranslate nohighlight">\(a^{[l]}_1 = \sigma^{[l]} (z^{[l]}_1) = \sigma^{[l]} \left(w^{[l]}_{10}x_0 + w^{[l]}_{11}x_1+\dots+w^{[l]}_{1n_X}x_{n_X}+b^{[l]}_1\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{1i}x_i + b^{[l]}_1\right\)</span></p>
-<p><span class="math notranslate nohighlight">\(\cdots\)</span></p>
-<p><span class="math notranslate nohighlight">\(a^{[l]}_{n^{[l]}} = \sigma^{[l]} (z^{[l]}_{n^{[l]}}) = \sigma^{[l]} \left(w^{[l]}_{n^{[l]}0}x_0 + w^{[l]}_{n^{[l]}1}x_1+\dots+w^{[l]}_{n^{[l]}n_X}x_{n_X}+b^{[l]}_{n^{[l]}}\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{n^{[l]}i}x_i + b^{[l]}_{n^{[l]}}\right)\)</span></p>
+<div class="math notranslate nohighlight">
+\[a^{[l]}_0 = \sigma^{[l]} (z^{[l]}_0) = \sigma^{[l]} \left(w^{[l]}_{00}x_0 + w^{[l]}_{01}x_1+\dots+w^{[l]}_{0n_X}x_{n_X}+b^{[l]}_0\right) = \sigma^{[l]} \left(\sum_i^{n_X} w^{[l]}_{0i}x^i + b^{[l]}_0\right)\]</div>
+<div class="math notranslate nohighlight">
+\[a^{[l]}_1 = \sigma^{[l]} (z^{[l]}_1) = \sigma^{[l]} \left(w^{[l]}_{10}x_0 + w^{[l]}_{11}x_1+\dots+w^{[l]}_{1n_X}x_{n_X}+b^{[l]}_1\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{1i}x_i + b^{[l]}_1\right)\]</div>
+<div class="math notranslate nohighlight">
+\[\cdots\]</div>
+<div class="math notranslate nohighlight">
+\[a^{[l]}_{n^{[l]}} = \sigma^{[l]} (z^{[l]}_{n^{[l]}}) = \sigma^{[l]} \left(w^{[l]}_{n^{[l]}0}x_0 + w^{[l]}_{n^{[l]}1}x_1+\dots+w^{[l]}_{n^{[l]}n_X}x_{n_X}+b^{[l]}_{n^{[l]}}\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{n^{[l]}i}x_i + b^{[l]}_{n^{[l]}}\right)\]</div>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nl</span><span class="p">):</span>
+	<span class="n">z</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+		<span class="n">z</span> <span class="o">+=</span> <span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+	<span class="n">z</span> <span class="o">+=</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+	<span class="n">a</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+	
+	<span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+</pre></div>
+</div>
 <p>The weights of the matrix can be represented by:</p>
-<p><span class="math notranslate nohighlight">\(\mathbf W^{[l]} = \begin{bmatrix} w^{[l]}_{00} &amp; w^{[l]}_{01} &amp; \cdots &amp; w^{[l]}_{0n_X}\\ w^{[l]}_{10} &amp; w^{[l]}_{11} &amp; \cdots &amp; w^{[l]}_{1n_X}\\\cdots&amp;\cdots&amp;\cdots&amp;\cdots\\w^{[l]}_{n^{[l]}0} &amp; w^{[l]}_{n^{[l]}1} &amp; \cdots &amp; w^{[l]}_{n^{[l]}n_X}\end{bmatrix}\)</span></p>
+<div class="math notranslate nohighlight">
+\[\begin{split}\mathbf W^{[l]} = \begin{bmatrix} w^{[l]}_{00} &amp; w^{[l]}_{01} &amp; \cdots &amp; w^{[l]}_{0n_X}\\ w^{[l]}_{10} &amp; w^{[l]}_{11} &amp; \cdots &amp; w^{[l]}_{1n_X}\\\cdots&amp;\cdots&amp;\cdots&amp;\cdots\\w^{[l]}_{n^{[l]}0} &amp; w^{[l]}_{n^{[l]}1} &amp; \cdots &amp; w^{[l]}_{n^{[l]}n_X}\end{bmatrix}\end{split}\]</div>
 <p>The dimension of <span class="math notranslate nohighlight">\(\mathbf W^{[l]}\)</span> depends on the input dimension <span class="math notranslate nohighlight">\(n_X\)</span> and the number of units (which is same as the output dimension of the layer) <span class="math notranslate nohighlight">\(n^{[l]}\)</span> i.e., <span class="math notranslate nohighlight">\((n^{[l]}, n_X)\)</span>. Using the matrix notations, the computations are:</p>
-<p><span class="math notranslate nohighlight">\(\mathbf a^{[l]} = \sigma^{[l]} (\mathbf z^{[l]}) = \sigma^{[l]}\left(\mathbf W^{[l]} \cdot \mathbf X^\top + \mathbf b^{[l]}\right)\)</span></p>
+<div class="math notranslate nohighlight">
+\[\mathbf a^{[l]} = \sigma^{[l]} (\mathbf z^{[l]}) = \sigma^{[l]}\left(\mathbf W^{[l]} \cdot \mathbf X^\top + \mathbf b^{[l]}\right)\]</div>
 <div class="pst-scrollable-table-container"><table class="table" id="notation-single-layer">
 <caption><span class="caption-number">Table 2 </span><span class="caption-text">Notations - single layer</span><a class="headerlink" href="#notation-single-layer" title="Link to this table">#</a></caption>
 <thead>
