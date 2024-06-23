@@ -683,26 +683,20 @@ document.write(`
 <span class="c1"># layer wise computations</span>
 <span class="n">a0</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">T</span>
 <span class="n">a1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">W1</span><span class="p">,</span> <span class="n">a0</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a1: </span><span class="si">{</span><span class="n">a1</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
 <span class="n">a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">W2</span><span class="p">,</span> <span class="n">a1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b2</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a2: </span><span class="si">{</span><span class="n">a2</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
 <span class="n">a3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">W3</span><span class="p">,</span> <span class="n">a2</span><span class="p">)</span> <span class="o">+</span> <span class="n">b3</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a3: </span><span class="si">{</span><span class="n">a3</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Outputs of the network: </span><span class="si">{</span><span class="n">a3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Outputs of the network&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">a3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of a1: (8, 10)
-Shape of a2: (12, 10)
-Shape of a3: (2, 10)
-Outputs of the network: [[48.97514768 40.78006352 24.55718999 30.20303075 32.66306258 48.1979801
-  49.94261146 28.00091955 32.59358435 41.0307172 ]
- [59.56719231 49.76893816 29.69656509 36.26551186 39.84596245 58.73617283
-  61.01766603 33.70259162 39.87323399 49.74898875]]
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Outputs of the network
+[[48.01322059 47.72381554 65.36657622 65.8130419  62.48998456 61.49479326
+  39.24379831 43.27581861 68.74999349 54.54894469]
+ [39.16374548 38.6375055  52.78429334 53.24641223 50.56094553 49.82602466
+  32.05710258 35.19762872 55.55254141 44.47240751]]
 </pre></div>
 </div>
 </div>
@@ -731,32 +725,24 @@ Outputs of the network: [[48.97514768 40.78006352 24.55718999 30.20303075 32.663
 <span class="n">l3</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">b3</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
 
 <span class="n">a1</span> <span class="o">=</span> <span class="n">l1</span><span class="p">(</span><span class="n">tensorX</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a1: </span><span class="si">{</span><span class="n">a1</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
 <span class="n">a2</span> <span class="o">=</span> <span class="n">l2</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a1: </span><span class="si">{</span><span class="n">a2</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
 <span class="n">a3</span> <span class="o">=</span> <span class="n">l3</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a3: </span><span class="si">{</span><span class="n">a3</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="n">a3</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of a1: torch.Size([10, 8])
-Shape of a1: torch.Size([10, 12])
-Shape of a3: torch.Size([10, 2])
-tensor([[48.9751, 59.5672],
-        [40.7801, 49.7689],
-        [24.5572, 29.6966],
-        [30.2030, 36.2655],
-        [32.6631, 39.8460],
-        [48.1980, 58.7362],
-        [49.9426, 61.0177],
-        [28.0009, 33.7026],
-        [32.5936, 39.8732],
-        [41.0307, 49.7490]], dtype=torch.float64, grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[48.0132, 39.1637],
+        [47.7238, 38.6375],
+        [65.3666, 52.7843],
+        [65.8130, 53.2464],
+        [62.4900, 50.5609],
+        [61.4948, 49.8260],
+        [39.2438, 32.0571],
+        [43.2758, 35.1976],
+        [68.7500, 55.5525],
+        [54.5489, 44.4724]], dtype=torch.float64, grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
