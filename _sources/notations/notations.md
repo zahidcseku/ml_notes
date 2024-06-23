@@ -270,15 +270,11 @@ b3 = np.random.rand(n3, 1)
 # layer wise computations
 a0 = x.T
 a1 = np.matmul(W1, a0) + b1
-print(f"Shape of a1: {a1.shape}")
-
 a2 = np.matmul(W2, a1) + b2
-print(f"Shape of a2: {a2.shape}")
-
 a3 = np.matmul(W3, a2) + b3
-print(f"Shape of a3: {a3.shape}")
 
-print(f"Outputs of the network: {a3}")
+print(f"Outputs of the network")
+print(a3)
 ```
 
 Let's, verify the results using pytorch. We will initialize the pytorch parameters and inputs using the same random tensors as our previous example.
@@ -305,13 +301,8 @@ l3.weight.data = torch.from_numpy(W3)
 l3.bias.data = torch.from_numpy(b3.squeeze())
 
 a1 = l1(tensorX)
-print(f"Shape of a1: {a1.shape}")
-
 a2 = l2(a1)
-print(f"Shape of a1: {a2.shape}")
-
 a3 = l3(a2)
-print(f"Shape of a3: {a3.shape}")
 
 print(a3)
 ```
