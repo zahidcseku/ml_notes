@@ -382,6 +382,14 @@ document.write(`
                 <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs-of-a-single-neuron">Inputs and outputs of a single neuron</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs-of-a-single-layer">Inputs and outputs of a single layer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs-of-a-multiple-layers">Inputs and outputs of a multiple layers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset">Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example">Code example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#future-plan">Future plan</a></li>
 </ul>
             </nav>
         </div>
@@ -394,26 +402,46 @@ document.write(`
                 <article class="bd-article">
                   
   <section class="tex2jax_ignore mathjax_ignore" id="deep-neural-network-notation">
-<h1>Deep neural network notation<a class="headerlink" href="#deep-neural-network-notation" title="Link to this heading">#</a></h1>
-<p>A deep neural network consists of multiple layers of computational units called neurons. Each layer is arranged sequentially and the units in each layer are arranged vertically. Each neuron (or unit) takes some input and produces an output. Consequently, a layer takes some inputs and produces some outputs using simple computations. When we say each layer takes inputs, we mean that each neuron takes inputs. In this section, I will discuss various notations used in deep neural networks. Most of the notations are adapted from Andrew Ng’s deep learning specialisation course. The notations involve multiple dimensions that can be confusing sometimes (actually all the time when you start learning from different sources). When I started learning DNN, I got familiar with one set of notations from Andrew’s course and started representing other materials using the same notations (it was not a trivial task at the beginning).</p>
+<h1><a class="toc-backref" href="#id2" role="doc-backlink">Deep neural network notation</a><a class="headerlink" href="#deep-neural-network-notation" title="Link to this heading">#</a></h1>
+<nav class="contents" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#deep-neural-network-notation" id="id2">Deep neural network notation</a></p>
+<ul>
+<li><p><a class="reference internal" href="#inputs-and-outputs-of-a-single-neuron" id="id3">Inputs and outputs of a single neuron</a></p></li>
+<li><p><a class="reference internal" href="#inputs-and-outputs-of-a-single-layer" id="id4">Inputs and outputs of a single layer</a></p></li>
+<li><p><a class="reference internal" href="#inputs-and-outputs-of-a-multiple-layers" id="id5">Inputs and outputs of a multiple layers</a></p></li>
+<li><p><a class="reference internal" href="#dataset" id="id6">Dataset</a></p>
+<ul>
+<li><p><a class="reference internal" href="#example" id="id7">Example</a></p></li>
+</ul>
+</li>
+<li><p><a class="reference internal" href="#code-example" id="id8">Code example</a></p></li>
+<li><p><a class="reference internal" href="#summary" id="id9">Summary</a></p></li>
+<li><p><a class="reference internal" href="#future-plan" id="id10">Future plan</a></p></li>
+</ul>
+</li>
+</ul>
+</nav>
+<p>A deep neural network (DNN) consists of multiple layers of computational units, called neurons. Each layer is arranged sequentially, and the units in each layer are arranged vertically. Each neuron (or unit) takes some input and produces an output. Consequently, a layer takes some inputs and produces some outputs using simple computations. When we say each layer takes inputs, we mean that each neuron in the layers takes inputs. In this section, I will discuss various notations used in deep neural networks. Most of the notations are adapted from Andrew Ng’s deep learning specialisation course. The notations involve multiple dimensions that can sometimes be confusing (actually, all the time when you start learning from different sources). When I started learning DNN, I got familiar with one set of notations from Andrew’s course and started representing other materials using the same notations (it was not a trivial task at the beginning).</p>
 <section id="inputs-and-outputs-of-a-single-neuron">
-<h2>Inputs and outputs of a single neuron<a class="headerlink" href="#inputs-and-outputs-of-a-single-neuron" title="Link to this heading">#</a></h2>
+<h2><a class="toc-backref" href="#id3" role="doc-backlink">Inputs and outputs of a single neuron</a><a class="headerlink" href="#inputs-and-outputs-of-a-single-neuron" title="Link to this heading">#</a></h2>
 <p>Each neuron takes arbitrary <span class="math notranslate nohighlight">\(n_X\)</span> dimensional input <span class="math notranslate nohighlight">\(\mathbf X\)</span> and produces a single output <span class="math notranslate nohighlight">\(a\)</span>.</p>
 <figure class="align-center" id="single-neuron">
 <a class="reference internal image-reference" href="../_images/single-neuron.png"><img alt="../_images/single-neuron.png" src="../_images/single-neuron.png" style="width: 200px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 1 </span><span class="caption-text">A single neural processing unit.</span><a class="headerlink" href="#single-neuron" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 1 </span><span class="caption-text">A single neural processing unit which takes <span class="math notranslate nohighlight">\(n_X\)</span> dimensional inputs and generates a scalar output <span class="math notranslate nohighlight">\(a\)</span>.</span><a class="headerlink" href="#single-neuron" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>The output of the neuron is computed in two steps. For an instance <span class="math notranslate nohighlight">\(\mathbf X\)</span>, first a weighted sum is computed as:</p>
+<p>The neuron’s output is calculated in two steps, as indicated by a circular + symbol and a rectangular <span class="math notranslate nohighlight">\(\sigma\)</span> symbol. A weighted sum is first computed as follows:</p>
 <div class="math notranslate nohighlight">
-\[z = x_0*w_0 + x_1*w_1 + \cdots + x_n*w_{n_X} + b = \sum_{i=0}^{n_X}x_i*w_i +b\]</div>
-<p>and then an activation function <span class="math notranslate nohighlight">\(\sigma\)</span> is applied to <span class="math notranslate nohighlight">\(z\)</span> to compute the output (called activation) as:</p>
+\[z = x_0*w_0 + x_1*w_1 + \cdots + x_{n_X}*w_{n_X} + b = \sum_{i=0}^{n_X}x_i*w_i +b\]</div>
+<p>And then an activation function <span class="math notranslate nohighlight">\(\sigma\)</span> is applied to <span class="math notranslate nohighlight">\(z\)</span> to compute the output (called activation) of the unit as follows:</p>
 <div class="math notranslate nohighlight">
 \[a = \sigma\left(z\right)\]</div>
-<p>If we organise the weights as a row vector <span class="math notranslate nohighlight">\(\mathbf W = [w_0, w_1, \cdots, w_{n_X}]\)</span>  and our input as a row vector <span class="math notranslate nohighlight">\(\mathbf X =[x_1, x_2,\dots,x_{n_X}]\)</span>, we can achive the same result using vector operation:</p>
+<p>If we express the input and the weights as row vectors <span class="math notranslate nohighlight">\(\mathbf W = [w_0, w_1, \cdots, w_{n_X}]\)</span> and <span class="math notranslate nohighlight">\(\mathbf X =[x_1, x_2,\dots,x_{n_X}]\)</span>, we can achieve the same result using a vector operation:</p>
 <div class="math notranslate nohighlight">
-\[a = \sigma(z) = \sigma(\mathbf W \cdot \mathbf X^\top+b).\]</div>
+\[a = \sigma(z) = \sigma(\mathbf W \cdot \mathbf X^\top + b)\]</div>
 <p><strong>Shapes</strong>: both the <span class="math notranslate nohighlight">\(\mathbf W\)</span> and <span class="math notranslate nohighlight">\(\mathbf X\)</span> are row vectors of shape <span class="math notranslate nohighlight">\((1, n_X)\)</span> and both <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(a\)</span> are scalars.</p>
 <div class="pst-scrollable-table-container"><table class="table" id="notation-single-neuron">
 <caption><span class="caption-number">Table 1 </span><span class="caption-text">Notations - single neuron</span><a class="headerlink" href="#notation-single-neuron" title="Link to this table">#</a></caption>
@@ -428,27 +456,31 @@ document.write(`
 <td><p><span class="math notranslate nohighlight">\((1, n_X)\)</span></p></td>
 <td><p>The input row vector.</p></td>
 </tr>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x_j\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
-<td><p>The value of the <span class="math notranslate nohighlight">\(j\)</span>-th feature of input object.</p></td>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(n_X\)</span></p></td>
+<td><p>1</p></td>
+<td><p>The dimension of the inputs.</p></td>
 </tr>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf W\)</span></p></td>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(x_j\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
+<td><p>The value of the <span class="math notranslate nohighlight">\(j\)</span>-th feature of an input object.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbf W\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\((1, n_X)\)</span></p></td>
 <td><p>Weight vector of the neuron.</p></td>
 </tr>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(b\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(b\)</span></p></td>
+<td><p>1</p></td>
 <td><p>Bias parameter of the neuron.</p></td>
 </tr>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(z\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
-<td><p>The intermediate output of the neuron given the input <span class="math notranslate nohighlight">\(\mathbf X\)</span> before applying the activation function.</p></td>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(z\)</span></p></td>
+<td><p>1</p></td>
+<td><p>The intermediate output of the neuron before applying the activation function.</p></td>
 </tr>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(a\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
-<td><p>The output (or activation) of the neuron given <span class="math notranslate nohighlight">\(\mathbf X\)</span> after applying the activation function <span class="math notranslate nohighlight">\(\sigma\)</span> to <span class="math notranslate nohighlight">\(z\)</span>.</p></td>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(a\)</span></p></td>
+<td><p>1</p></td>
+<td><p>The output (or activation) of the neuron after applying the activation function <span class="math notranslate nohighlight">\(\sigma\)</span> to <span class="math notranslate nohighlight">\(z\)</span>.</p></td>
 </tr>
-<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf X^\top\)</span></p></td>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbf X^\top\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\((n_X, 1)\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(\mathbf X\)</span> transposed.</p></td>
 </tr>
@@ -457,26 +489,27 @@ document.write(`
 </div>
 </section>
 <section id="inputs-and-outputs-of-a-single-layer">
-<h2>Inputs and outputs of a single layer<a class="headerlink" href="#inputs-and-outputs-of-a-single-layer" title="Link to this heading">#</a></h2>
-<p>A layer in a neural network is created by stacking multiple neural units. Each unit takes the same number of inputs (<span class="math notranslate nohighlight">\(n_X\)</span>) and produces a single output. The number of outputs of a layer is determined by the number of units in the layer. Representing a layer by <span class="math notranslate nohighlight">\(l\)</span>, the number of units in the layer is expressed as <span class="math notranslate nohighlight">\(n^{[l]}\)</span>.</p>
+<h2><a class="toc-backref" href="#id4" role="doc-backlink">Inputs and outputs of a single layer</a><a class="headerlink" href="#inputs-and-outputs-of-a-single-layer" title="Link to this heading">#</a></h2>
+<p>A layer in a neural network is created by stacking multiple neural units. Each unit takes the same number of real numbers (<span class="math notranslate nohighlight">\(n_X\)</span>) and produces a single output. The number of outputs of a layer is determined by the number of units in the layer. Representing a layer by <span class="math notranslate nohighlight">\(l\)</span>, the number of units in the layer is expressed as <span class="math notranslate nohighlight">\(n^{[l]}\)</span>.</p>
 <figure class="align-center" id="single-layer">
 <a class="reference internal image-reference" href="../_images/single_layer.png"><img alt="../_images/single_layer.png" src="../_images/single_layer.png" style="width: 200px;" /></a>
 <figcaption>
-<p><span class="caption-number">Fig. 2 </span><span class="caption-text">A single layer processing unit.</span><a class="headerlink" href="#single-layer" title="Link to this image">#</a></p>
+<p><span class="caption-number">Fig. 2 </span><span class="caption-text">A single layer processing unit that takes <span class="math notranslate nohighlight">\(n_X\)</span> dimensional inputs and produces <span class="math notranslate nohighlight">\(n^{[l]}\)</span> dimensional outputs. Here, <span class="math notranslate nohighlight">\(n^{[l]}\)</span> is the number of processing units in layer <span class="math notranslate nohighlight">\(l\)</span>.</span><a class="headerlink" href="#single-layer" title="Link to this image">#</a></p>
 </figcaption>
 </figure>
-<p>Now that we have multiple units, we cannot express the weights as a vector anymore. The weights of each individual unit in the layer are still a vector (shape <span class="math notranslate nohighlight">\((1, n_X)\)</span>) and we need a matrix (by stacking the vectors) to express the weights of layer <span class="math notranslate nohighlight">\(l\)</span>. For <span class="math notranslate nohighlight">\(n^{[l]}\)</span> units we will have  <span class="math notranslate nohighlight">\(n^{[l]}\)</span> biases expressed as <span class="math notranslate nohighlight">\(\mathbf b^{[l]}\)</span> which is a vector of shape <span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span>.  We have multiple outputs from a layer, hence both <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(z\)</span> are now vectors or shape <span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span> and represented by: <span class="math notranslate nohighlight">\(\mathbf z^{[l]}\)</span> and <span class="math notranslate nohighlight">\(\mathbf a^{[l]}\)</span>. Layer <span class="math notranslate nohighlight">\(l\)</span> performs the following operations:</p>
+<p>Now that we have multiple units, we can’t express the weights as a vector anymore. The weights of each individual unit in the layer are still a vector (shape <span class="math notranslate nohighlight">\((1, n_X)\)</span>), and we need a matrix notation (by stacking the vectors) to express the weights of layer <span class="math notranslate nohighlight">\(l\)</span>. For <span class="math notranslate nohighlight">\(n^{[l]}\)</span> units, we will have <span class="math notranslate nohighlight">\(n^{[l]}\)</span> biases expressed as <span class="math notranslate nohighlight">\(\mathbf b^{[l]}\)</span>, which is a vector of shape <span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span>. We have multiple outputs from a layer, hence both <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(z\)</span> are now vectors of shape <span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span> and represented by: <span class="math notranslate nohighlight">\(\mathbf z^{[l]}\)</span> and <span class="math notranslate nohighlight">\(\mathbf a^{[l]}\)</span> respectively. Layer <span class="math notranslate nohighlight">\(l\)</span> performs the following operations:</p>
 <div class="math notranslate nohighlight">
 \[a^{[l]}_0 = \sigma^{[l]} (z^{[l]}_0) = \sigma^{[l]} \left(w^{[l]}_{00}x_0 + w^{[l]}_{01}x_1+\dots+w^{[l]}_{0n_X}x_{n_X}+b^{[l]}_0\right) = \sigma^{[l]} \left(\sum_i^{n_X} w^{[l]}_{0i}x^i + b^{[l]}_0\right)\]</div>
 <div class="math notranslate nohighlight">
 \[a^{[l]}_1 = \sigma^{[l]} (z^{[l]}_1) = \sigma^{[l]} \left(w^{[l]}_{10}x_0 + w^{[l]}_{11}x_1+\dots+w^{[l]}_{1n_X}x_{n_X}+b^{[l]}_1\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{1i}x_i + b^{[l]}_1\right)\]</div>
 <div class="math notranslate nohighlight">
-\[\cdots\]</div>
+\[\dots\]</div>
 <div class="math notranslate nohighlight">
 \[a^{[l]}_{n^{[l]}} = \sigma^{[l]} (z^{[l]}_{n^{[l]}}) = \sigma^{[l]} \left(w^{[l]}_{n^{[l]}0}x_0 + w^{[l]}_{n^{[l]}1}x_1+\dots+w^{[l]}_{n^{[l]}n_X}x_{n_X}+b^{[l]}_{n^{[l]}}\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{n^{[l]}i}x_i + b^{[l]}_{n^{[l]}}\right)\]</div>
+<p>We can implement the above computations in python using only multiplications and additions.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nl</span><span class="p">):</span>
-	<span class="n">z</span> <span class="o">=</span> <span class="p">[]</span>
+	<span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
 	<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
 		<span class="n">z</span> <span class="o">+=</span> <span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
 	<span class="n">z</span> <span class="o">+=</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
@@ -485,14 +518,21 @@ document.write(`
 	<span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 </pre></div>
 </div>
-<p>The weights of the matrix can be represented by:</p>
+<p>The equations and computations can be simplified using matrix operations. The weights of the matrix can be represented by:</p>
 <div class="math notranslate nohighlight">
-\[\begin{split}\mathbf W^{[l]} = \begin{bmatrix} w^{[l]}_{00} &amp; w^{[l]}_{01} &amp; \cdots &amp; w^{[l]}_{0n_X}\\ w^{[l]}_{10} &amp; w^{[l]}_{11} &amp; \cdots &amp; w^{[l]}_{1n_X}\\\cdots&amp;\cdots&amp;\cdots&amp;\cdots\\w^{[l]}_{n^{[l]}0} &amp; w^{[l]}_{n^{[l]}1} &amp; \cdots &amp; w^{[l]}_{n^{[l]}n_X}\end{bmatrix}\end{split}\]</div>
+\[\begin{split}
+\mathbf W^{[l]} = \begin{bmatrix} w^{[l]}_{00} &amp; w^{[l]}_{01} &amp; \cdots &amp; w^{[l]}_{0n_X}\\ w^{[l]}_{10} &amp; w^{[l]}_{11} &amp; \cdots &amp; w^{[l]}_{1n_X}\\\cdots&amp;\cdots&amp;\cdots&amp;\cdots\\w^{[l]}_{n^{[l]}0} &amp; w^{[l]}_{n^{[l]}1} &amp; \cdots &amp; w^{[l]}_{n^{[l]}n_X}\end{bmatrix}
+\end{split}\]</div>
 <p>The dimension of <span class="math notranslate nohighlight">\(\mathbf W^{[l]}\)</span> depends on the input dimension <span class="math notranslate nohighlight">\(n_X\)</span> and the number of units (which is same as the output dimension of the layer) <span class="math notranslate nohighlight">\(n^{[l]}\)</span> i.e., <span class="math notranslate nohighlight">\((n^{[l]}, n_X)\)</span>. Using the matrix notations, the computations are:</p>
 <div class="math notranslate nohighlight">
 \[\mathbf a^{[l]} = \sigma^{[l]} (\mathbf z^{[l]}) = \sigma^{[l]}\left(\mathbf W^{[l]} \cdot \mathbf X^\top + \mathbf b^{[l]}\right)\]</div>
+<p>In python implementation,</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">z</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">W</span><span class="p">,</span> <span class="n">x</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">b</span>
+<span class="n">a</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+</pre></div>
+</div>
 <div class="pst-scrollable-table-container"><table class="table" id="notation-single-layer">
-<caption><span class="caption-number">Table 2 </span><span class="caption-text">Notations - single layer</span><a class="headerlink" href="#notation-single-layer" title="Link to this table">#</a></caption>
+<caption><span class="caption-number">Table 2 </span><span class="caption-text">Notations - single layer of neurons</span><a class="headerlink" href="#notation-single-layer" title="Link to this table">#</a></caption>
 <thead>
 <tr class="row-odd"><th class="head"><p>Symbol</p></th>
 <th class="head"><p>Shape</p></th>
@@ -502,7 +542,7 @@ document.write(`
 <tbody>
 <tr class="row-even"><td><p><span class="math notranslate nohighlight">\(l\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
-<td><p>Layer id.</p></td>
+<td><p>The layer id.</p></td>
 </tr>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(n^{[l]}\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
@@ -512,7 +552,7 @@ document.write(`
 <td><p><span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span></p></td>
 <td><p>The bias vector corresponding to layer <span class="math notranslate nohighlight">\(l\)</span>.</p></td>
 </tr>
-<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(b^{[l]}\)</span></p></td>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(b^{[l]}_i\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
 <td><p>Bias of the <span class="math notranslate nohighlight">\(i\)</span>-th unit in layer <span class="math notranslate nohighlight">\(l\)</span>.</p></td>
 </tr>
@@ -530,19 +570,234 @@ document.write(`
 </tr>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbf z^{[l]}\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span></p></td>
-<td><p>The intermediate outputs of the neurons given the input <span class="math notranslate nohighlight">\(\mathbf X\)</span> before applying the activation function.</p></td>
+<td><p>The intermediate outputs of the neurons given the input  <span class="math notranslate nohighlight">\(\mathbf X\)</span> before applying the activation function.</p></td>
 </tr>
 <tr class="row-even"><td><p><span class="math notranslate nohighlight">\(a_i^{[l]}, z_i^{[l]}\)</span></p></td>
 <td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
 <td><p>Elements of <span class="math notranslate nohighlight">\(\mathbf a^{[l]}\)</span> and <span class="math notranslate nohighlight">\(\mathbf z^{[l]}\)</span>.</p></td>
 </tr>
 <tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\sigma^{[l]}\)</span></p></td>
-<td><p><span class="math notranslate nohighlight">\(—\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(~~\)</span></p></td>
 <td><p>Activation function corresponding to layer <span class="math notranslate nohighlight">\(l\)</span>.</p></td>
 </tr>
 </tbody>
 </table>
 </div>
+</section>
+<section id="inputs-and-outputs-of-a-multiple-layers">
+<h2><a class="toc-backref" href="#id5" role="doc-backlink">Inputs and outputs of a multiple layers</a><a class="headerlink" href="#inputs-and-outputs-of-a-multiple-layers" title="Link to this heading">#</a></h2>
+<p>A single neuron unit or a single layer network is never used for solving practical machine learning problems. Building upon the discussion of a single neuron unit and a single layer of neurons, we now discuss the practical scenario where multiple layers of neurons are arranged sequentially as shown in the figure below. The input <span class="math notranslate nohighlight">\(\mathbf X \in \mathbb R^{n_X}\)</span> is fed to the model at layer <span class="math notranslate nohighlight">\(l=1\)</span> which processes the input and produces an output vector <span class="math notranslate nohighlight">\(\mathbf a^{[1]} \in \mathbb R^{n^{[1]}}\)</span>. The layer <span class="math notranslate nohighlight">\(2\)</span> receives inputs <span class="math notranslate nohighlight">\(\mathbf a^{n^{[1]}} \in \mathbb R^{n^{[1]}}\)</span> from layer <span class="math notranslate nohighlight">\(1\)</span> and produces outputs <span class="math notranslate nohighlight">\(\mathbf a^{[2]} \in \mathbb R^{n^{[2]}}\)</span> and so on. Remember that each neuron receives the same dimensional inputs and the output dimension of a layer is equal to the number of units. Each layer (except the first layer) receives input from the previous layer. The number of units in a layer is a design choice (except the last layer <span class="math notranslate nohighlight">\(L\)</span>) determined through hyperparameter search. The last layer from which we obtain the outputs of the model is called the output layer. The input dimension of the first layer and the number of units of layer <span class="math notranslate nohighlight">\(L\)</span> (or the output dimension of layer <span class="math notranslate nohighlight">\(L\)</span>) depends on the task. For example, for the digit classification of <span class="math notranslate nohighlight">\(28\times 28\)</span> images of digits, the input dimension <span class="math notranslate nohighlight">\(n_X=28*28=784\)</span> and the output dimension or the number of units in layer <span class="math notranslate nohighlight">\(L\)</span> is <span class="math notranslate nohighlight">\(10\)</span>.</p>
+<figure class="align-center" id="multi-layer-model">
+<a class="reference internal image-reference" href="../_images/multi_layer_model.png"><img alt="../_images/multi_layer_model.png" src="../_images/multi_layer_model.png" style="width: 500px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 3 </span><span class="caption-text">A multilayer deep neural network (or a multilayer perceptron) model. Each layer <span class="math notranslate nohighlight">\(l\)</span> consists of <span class="math notranslate nohighlight">\(n^{[l]}\)</span> nuerons.</span><a class="headerlink" href="#multi-layer-model" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+<p>All the symbols used in the above <a class="reference internal" href="#multi-layer-model"><span class="std std-ref">figure</span></a> are covered in the previous section: Inputs and Outputs of a Single Layer. Often, we use <span class="math notranslate nohighlight">\(\mathbf {\hat y}\)</span> to represent the output of the model. So, we can say <span class="math notranslate nohighlight">\(\mathbf{\hat y}=\mathbf a^{[L]}\)</span>. In addition to our previous symbols, we introduce the following symbol for multilayer models.</p>
+<div class="pst-scrollable-table-container"><table class="table" id="notation-multiple-layers">
+<caption><span class="caption-number">Table 3 </span><span class="caption-text">Notations - multiple layers of neurons</span><a class="headerlink" href="#notation-multiple-layers" title="Link to this table">#</a></caption>
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Shape</p></th>
+<th class="head"><p>Definition</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(L\)</span></p></td>
+<td><p>1</p></td>
+<td><p>The number of layers.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(1,2,\dots,l,\dots,L\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\(1\)</span></p></td>
+<td><p>Layer id.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf{\hat y} = \mathbf a^{[L]}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((a^{[L]}, 1)\)</span></p></td>
+<td><p>Output of the model.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbf X = \mathbf a^{[0]}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((1, n_X)\)</span></p></td>
+<td><p>Inputs in terms of activation.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Using the activation notations, <span class="math notranslate nohighlight">\(\mathbf a^{[0]}=\mathbf X^\top\)</span> and <span class="math notranslate nohighlight">\(\mathbf a^{[L]}=\mathbf{\hat y}\)</span> we can draw as general eqaution ov the network as:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf z^{[l]} = W^{[l]}\cdot \mathbf a^{[l-1]} + \mathbf b^{[l]}\]</div>
+<div class="math notranslate nohighlight">
+\[a^{[l]} = \sigma^{[l]}\left (\mathbf z^{[l]}\right)\]</div>
+<p>for <span class="math notranslate nohighlight">\(l=1,2,\dots,L\)</span></p>
+</section>
+<section id="dataset">
+<h2><a class="toc-backref" href="#id6" role="doc-backlink">Dataset</a><a class="headerlink" href="#dataset" title="Link to this heading">#</a></h2>
+<p>In the above discussion, we considered our input <span class="math notranslate nohighlight">\(\mathbf X\in\mathbb R^{n_X}\)</span> to be a <span class="math notranslate nohighlight">\(n_X\)</span> dimensional row vector. However, in real applications, the input is a <span class="math notranslate nohighlight">\(2\)</span> or <span class="math notranslate nohighlight">\(3\)</span> dimensional tensor (we consider 2d cases only for now). For supervised learning, we have many instances of <span class="math notranslate nohighlight">\(\mathbf X\)</span> and their associated labels <span class="math notranslate nohighlight">\(\mathbf y\)</span>. For unsupervised learning tasks, we do not have <span class="math notranslate nohighlight">\(\mathbf y\)</span>. We represent the dataset as <span class="math notranslate nohighlight">\(\mathcal D=(\mathbf X, \mathbf y)\)</span>. The shape of <span class="math notranslate nohighlight">\(\mathbf X\)</span> is given by <span class="math notranslate nohighlight">\((n_{\mathcal D}, n_X)\)</span> and the shape of <span class="math notranslate nohighlight">\(\mathbf y\)</span> is <span class="math notranslate nohighlight">\((n_\mathcal D, n_y)\)</span>. To refer to any instance of <span class="math notranslate nohighlight">\(\mathcal D\)</span>, we use the superscript notation i.e., <span class="math notranslate nohighlight">\(\mathbf X^{(i)}\)</span> refers to the <span class="math notranslate nohighlight">\(i\)</span>-th instance of <span class="math notranslate nohighlight">\(\mathbf X\)</span> and <span class="math notranslate nohighlight">\(\mathbf y^{(i)}\)</span> is the corresponding label. The superscript notation can also be used to refer to any layer computation, e.g., <span class="math notranslate nohighlight">\(\mathbf z^{(i)[l]}\)</span> refers to the output of layer <span class="math notranslate nohighlight">\(l\)</span> corresponding to the <span class="math notranslate nohighlight">\(i\)</span> instance in the dataset.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>we used the same <span class="math notranslate nohighlight">\(\mathbf X\)</span> to refer to the input as a vector above for simplicity. We should have used <span class="math notranslate nohighlight">\(\mathbf X^{(i)}\)</span>. With this dataset notation in the above computations, all output shapes will change as follows: <span class="math notranslate nohighlight">\(\mathbf z^{[l]}\)</span> and <span class="math notranslate nohighlight">\(\mathbf a^{[l]}\)</span> now include <span class="math notranslate nohighlight">\(n_{\mathcal D}\)</span> instances corresponding to the number of samples in the dataset.</p>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>For efficiency, the dataset is divided into batches of inputs and the network processes a batch at a time rather than the entire batch at a time.</p>
+</div>
+<section id="example">
+<h3><a class="toc-backref" href="#id7" role="doc-backlink">Example</a><a class="headerlink" href="#example" title="Link to this heading">#</a></h3>
+<p>The <a class="reference external" href="https://archive.ics.uci.edu/dataset/53/iris">iris dataset:</a> includes 150 instances of iris flower. Each isntance is described by four feautures {sepal length, sepal width, petal length, petal width}. In our notation,  the iris dataset can be described as follows:</p>
+<ul class="simple">
+<li><p><span class="math notranslate nohighlight">\(n_{\mathcal D} =150\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(n_X=4\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(n_y=1\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf X^{(2)}= [4.9, 3.0, 1.4, 0.2]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(\mathbf y^{(2)} = [C1]\)</span></p></li>
+<li><p><span class="math notranslate nohighlight">\(x^{(150)}_3=5.1\)</span></p></li>
+</ul>
+<figure class="align-center" id="id1">
+<a class="reference internal image-reference" href="../_images/dataset.png"><img alt="../_images/dataset.png" src="../_images/dataset.png" style="width: 250px;" /></a>
+<figcaption>
+<p><span class="caption-number">Fig. 4 </span><span class="caption-text">The iris dataset.</span><a class="headerlink" href="#id1" title="Link to this image">#</a></p>
+</figcaption>
+</figure>
+</section>
+</section>
+<section id="code-example">
+<h2><a class="toc-backref" href="#id8" role="doc-backlink">Code example</a><a class="headerlink" href="#code-example" title="Link to this heading">#</a></h2>
+<p>In this code example, we will</p>
+</section>
+<section id="summary">
+<h2><a class="toc-backref" href="#id9" role="doc-backlink">Summary</a><a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
+<p>An entire multilayer neural network can be expressed as a set of parameters - the weights and biases.</p>
+<p><span class="math notranslate nohighlight">\(\mathbf{\hat y} = f_\Theta(\mathbf X)\)</span> where <span class="math notranslate nohighlight">\(\Theta = \{\mathbf W^{[l]}, \mathbf b^{[l]}~|~l = 1,2, \dots, L\}\)</span>.</p>
+<p>Let’s consider the number of units of a 3 layer network to be <span class="math notranslate nohighlight">\(n^{[1]}=8, n^{[2]}=16, n^{[3]}=3\)</span> and the input dimension <span class="math notranslate nohighlight">\((n_\mathcal D, n_X) = (500, 4)\)</span>. In layer 1, we have 8 units i.e., the output dimensions of layer 1 (also the input dimension of layer 2) is 8, <span class="math notranslate nohighlight">\(\mathbf W^{[1]}\)</span> will have 8 rows (weights of each unit is a row in the weight matrix) and each unit of layer 1 will process 4 dimensional inputs (as <span class="math notranslate nohighlight">\(n_X=4\)</span>) that means each unit will require 4 weights i.e, <span class="math notranslate nohighlight">\(\mathbf W^{[1]}\)</span> has 4 columns. The shape of <span class="math notranslate nohighlight">\(\mathbf W^{[1]}\)</span> is <span class="math notranslate nohighlight">\((8, 4)\)</span>. In our notation, the input <span class="math notranslate nohighlight">\(\mathbf X^\top = \mathbf a^{[0]}\)</span>, the output of layer 1 is <span class="math notranslate nohighlight">\(\mathbf a^{[1]}\)</span> which is <span class="math notranslate nohighlight">\(8\)</span> dimensional that implies each unit of layer 2 will process <span class="math notranslate nohighlight">\(8\)</span> dimensional inputs i.e., <span class="math notranslate nohighlight">\(\mathbf W^{[2]}\)</span> will have <span class="math notranslate nohighlight">\(8\)</span> columns and with <span class="math notranslate nohighlight">\(n^{[2]}=16\)</span> units the number of rows in <span class="math notranslate nohighlight">\(\mathbf W^{[2]}\)</span> is <span class="math notranslate nohighlight">\(16\)</span>. Similarly, the shape of <span class="math notranslate nohighlight">\(\mathbf W^{[3]}\)</span> is <span class="math notranslate nohighlight">\((3, 16)\)</span>.</p>
+<p>The dimensions of <span class="math notranslate nohighlight">\(\mathbf W\)</span> and <span class="math notranslate nohighlight">\(\mathbf b\)</span> are:</p>
+<ul class="simple">
+<li><p>For, <span class="math notranslate nohighlight">\(l=1\)</span>, shape of <span class="math notranslate nohighlight">\(\mathbf W^{[1]}=(8,4)\)</span> and shape of <span class="math notranslate nohighlight">\(\mathbf b^{[1]}=(8,1)\)</span>.</p></li>
+<li><p>For, <span class="math notranslate nohighlight">\(l=2\)</span>, shape of <span class="math notranslate nohighlight">\(\mathbf W^{[2]}=(16,8)\)</span> and shape of <span class="math notranslate nohighlight">\(\mathbf b^{[2]}=(16,1)\)</span>.</p></li>
+<li><p>For, <span class="math notranslate nohighlight">\(l=3\)</span>, shape of <span class="math notranslate nohighlight">\(\mathbf W^{[3]}=(3,16)\)</span> and shape of <span class="math notranslate nohighlight">\(\mathbf b^{[3]}=(3,1)\)</span>.</p></li>
+</ul>
+<p>Computations in the network are:</p>
+<div class="math notranslate nohighlight">
+\[\mathbf a^{[1]} = \sigma^{[1]}\left(W^{[1]}\cdot \mathbf a^{[0]} + \mathbf b^{[1]}\right)\]</div>
+<div class="math notranslate nohighlight">
+\[\mathbf a^{[2]} = \sigma^{[2]}\left(W^{[2]}\cdot \mathbf a^{[1]} + \mathbf b^{[2]}\right)\]</div>
+<div class="math notranslate nohighlight">
+\[\mathbf a^{[3]} = \sigma^{[3]}\left(W^{[3]}\cdot \mathbf a^{[2]} + \mathbf b^{[3]}\right)=\mathbf{\hat y}\]</div>
+<p>The shapes of <span class="math notranslate nohighlight">\(a^{[1]}, a^{[2]}\)</span> and <span class="math notranslate nohighlight">\(a^{[3]}\)</span>  are <span class="math notranslate nohighlight">\((8, 500), (16, 500)\)</span> and <span class="math notranslate nohighlight">\((3, 500)\)</span>.</p>
+</section>
+<section id="future-plan">
+<h2><a class="toc-backref" href="#id10" role="doc-backlink">Future plan</a><a class="headerlink" href="#future-plan" title="Link to this heading">#</a></h2>
+<p>In future, I will discuss the forward and backward propagation through a neural network using a complete example. Stay tuned:</p>
+<style>
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview {
+display: flex !important;
+flex-direction: column !important;
+justify-content: center !important;
+margin-top: 30px !important;
+padding: clamp(17px, 5%, 40px) clamp(17px, 7%, 50px) !important;
+max-width: none !important;
+border-radius: 6px !important;
+box-shadow: 0 5px 25px rgba(34, 60, 47, 0.25) !important;
+}
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview,
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview *{
+box-sizing: border-box !important;
+}
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-heading {
+width: 100% !important;
+}
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-heading h5{
+margin-top: 0 !important;
+margin-bottom: 0 !important;
+}
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field {
+margin-top: 20px !important;
+width: 100% !important;
+}
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field input {
+width: 100% !important;
+height: 40px !important;
+border-radius: 6px !important;
+border: 2px solid #e9e8e8 !important;
+background-color: #fff;
+outline: none !important;
+}
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field input {
+color: #000000 !important;
+font-family: "Montserrat" !important;
+font-size: 14px;
+font-weight: 400;
+line-height: 20px;
+text-align: center;
+}
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field input::placeholder {
+color: #000000 !important;
+opacity: 1 !important;
+}
+
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field input:-ms-input-placeholder {
+color: #000000 !important;
+}
+
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-input-field input::-ms-input-placeholder {
+color: #000000 !important;
+}
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-submit-button {
+margin-top: 10px !important;
+width: 100% !important;
+}
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-submit-button button {
+width: 100% !important;
+height: 40px !important;
+border: 0 !important;
+border-radius: 6px !important;
+line-height: 0px !important;
+}
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview .preview-submit-button button:hover {
+cursor: pointer !important;
+}
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .powered-by-line {
+color: #231f20 !important;
+font-family: "Montserrat" !important;
+font-size: 13px !important;
+font-weight: 400 !important;
+line-height: 25px !important;
+text-align: center !important;
+text-decoration: none !important;
+display: flex !important;
+width: 100% !important;
+justify-content: center !important;
+align-items: center !important;
+margin-top: 10px !important;
+}
+.followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .powered-by-line img {
+margin-left: 10px !important;
+height: 1.13em !important;
+max-height: 1.13em !important;
+}
+
+</style>
+<div class="followit--follow-form-container" attr-a attr-b attr-c attr-d attr-e attr-f>
+<form data-v-c76ccf54="" action="https://api.follow.it/subscription-form/TUo5R2xpLzYwVVJQeER5Sk5HeXpaUFk2WXlWRXVLUUhNeWgxeVg4V1c4Q0FGVmFHSEttNXlnVkdmTUJCZDBpMlV4MlJwaVpGa2NOc1hOeGdGU2x0eTZVV040Y2pZcTdrMWt1RHRsRzJtRUVhLzg1Nzh2anU5NkF3UE5zZ3RJVlN8K3gzWVA2OGRldnNMVlFHTTIrc2x5MG1tL1ZrTjdEL2xzaktHZ1A3RmlYWT0=/21" method="post"><div data-v-c76ccf54="" class="form-preview" style="background-color: rgb(255, 255, 255); position: relative;"><div data-v-c76ccf54="" class="preview-heading"><h5 data-v-c76ccf54="" style="text-transform: none !important; font-family: Arial; font-weight: bold; color: rgb(0, 0, 0); font-size: 16px; text-align: center;">Get notification of new posts:</h5></div><div data-v-c76ccf54="" class="preview-input-field"><input data-v-c76ccf54="" type="email" name="email" required="" placeholder="Enter your email" spellcheck="false" style="text-transform: none !important; font-family: Arial; font-weight: normal; color: rgb(0, 0, 0); font-size: 14px; text-align: center; background-color: rgb(255, 255, 255);"></div><div data-v-c76ccf54="" class="preview-submit-button"><button data-v-c76ccf54="" type="submit" style="text-transform: none !important; font-family: Arial; font-weight: bold; color: rgb(255, 255, 255); font-size: 16px; text-align: center; background-color: rgb(0, 0, 0);">Subscribe</button></div></div></form><a href="[https://follow.it](https://follow.it/)" class="powered-by-line">Powered by <img src="https://follow.it/static/img/colored-logo.svg" alt="[follow.it](http://follow.it/)" height="17px"/></a>
+</div>
+<div id="disqus_thread"></div>
+<script>
+/**
+*  RECOMMENDED CONFIGURATION VARIABLES: EDIT AND UNCOMMENT THE SECTION BELOW TO INSERT DYNAMIC VALUES FROM YOUR PLATFORM OR CMS.
+*  LEARN WHY DEFINING THESE VARIABLES IS IMPORTANT: https://disqus.com/admin/universalcode/#configuration-variables    */
+/*
+var disqus_config = function () {
+this.page.url = PAGE_URL;  // Replace PAGE_URL with your page's canonical URL variable
+this.page.identifier = PAGE_IDENTIFIER; // Replace PAGE_IDENTIFIER with your page's unique identifier variable
+};
+*/
+(function() { // DON'T EDIT BELOW THIS LINE
+var d = document, s = d.createElement('script');
+s.src = 'https://https-zahidcseku-github-io-ml-notes.disqus.com/embed.js';
+s.setAttribute('data-timestamp', +new Date());
+(d.head || d.body).appendChild(s);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<script id="dsq-count-scr" src="[//https-zahidcseku-github-io-ml-notes.disqus.com/count.js](notion://https-zahidcseku-github-io-ml-notes.disqus.com/count.js)" async></script>
 </section>
 </section>
 
@@ -612,6 +867,14 @@ document.write(`
     <ul class="visible nav section-nav flex-column">
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs-of-a-single-neuron">Inputs and outputs of a single neuron</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs-of-a-single-layer">Inputs and outputs of a single layer</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#inputs-and-outputs-of-a-multiple-layers">Inputs and outputs of a multiple layers</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#dataset">Dataset</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example">Example</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example">Code example</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#future-plan">Future plan</a></li>
 </ul>
   </nav></div>
 
