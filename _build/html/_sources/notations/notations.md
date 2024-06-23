@@ -339,8 +339,6 @@ $$\mathbf a^{[3]} = \sigma^{[3]}\left(W^{[3]}\cdot \mathbf a^{[2]} + \mathbf b^{
 The shapes of $a^{[1]}, a^{[2]}$ and $a^{[3]}$  are $(8, 500), (16, 500)$ and $(3, 500)$. 
 
 
-## Future plan
-
 In future, I will discuss the forward and backward propagation through a neural network using a complete example. Stay tuned:
 
 <style>

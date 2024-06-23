@@ -389,7 +389,6 @@ document.write(`
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example">Code example</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#future-plan">Future plan</a></li>
 </ul>
             </nav>
         </div>
@@ -418,7 +417,6 @@ document.write(`
 </li>
 <li><p><a class="reference internal" href="#code-example" id="id8">Code example</a></p></li>
 <li><p><a class="reference internal" href="#summary" id="id9">Summary</a></p></li>
-<li><p><a class="reference internal" href="#future-plan" id="id10">Future plan</a></p></li>
 </ul>
 </li>
 </ul>
@@ -693,10 +691,10 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Outputs of the network
-[[48.01322059 47.72381554 65.36657622 65.8130419  62.48998456 61.49479326
-  39.24379831 43.27581861 68.74999349 54.54894469]
- [39.16374548 38.6375055  52.78429334 53.24641223 50.56094553 49.82602466
-  32.05710258 35.19762872 55.55254141 44.47240751]]
+[[75.98321879 41.61443243 65.43336042 85.93272625 56.4863757  79.38183821
+  68.03412485 77.46655514 51.84885633 62.4376285 ]
+ [66.86983208 37.04062736 57.93844585 75.49550147 49.99550721 70.14955942
+  59.82419454 68.14586269 45.81128703 55.17665594]]
 </pre></div>
 </div>
 </div>
@@ -733,16 +731,16 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[48.0132, 39.1637],
-        [47.7238, 38.6375],
-        [65.3666, 52.7843],
-        [65.8130, 53.2464],
-        [62.4900, 50.5609],
-        [61.4948, 49.8260],
-        [39.2438, 32.0571],
-        [43.2758, 35.1976],
-        [68.7500, 55.5525],
-        [54.5489, 44.4724]], dtype=torch.float64, grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[75.9832, 66.8698],
+        [41.6144, 37.0406],
+        [65.4334, 57.9384],
+        [85.9327, 75.4955],
+        [56.4864, 49.9955],
+        [79.3818, 70.1496],
+        [68.0341, 59.8242],
+        [77.4666, 68.1459],
+        [51.8489, 45.8113],
+        [62.4376, 55.1767]], dtype=torch.float64, grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -772,9 +770,6 @@ document.write(`
 <div class="math notranslate nohighlight">
 \[\mathbf a^{[3]} = \sigma^{[3]}\left(W^{[3]}\cdot \mathbf a^{[2]} + \mathbf b^{[3]}\right)=\mathbf{\hat y}\]</div>
 <p>The shapes of <span class="math notranslate nohighlight">\(a^{[1]}, a^{[2]}\)</span> and <span class="math notranslate nohighlight">\(a^{[3]}\)</span>  are <span class="math notranslate nohighlight">\((8, 500), (16, 500)\)</span> and <span class="math notranslate nohighlight">\((3, 500)\)</span>.</p>
-</section>
-<section id="future-plan">
-<h2><a class="toc-backref" href="#id10" role="doc-backlink">Future plan</a><a class="headerlink" href="#future-plan" title="Link to this heading">#</a></h2>
 <p>In future, I will discuss the forward and backward propagation through a neural network using a complete example. Stay tuned:</p>
 <style>
 .followit--follow-form-container[attr-a][attr-b][attr-c][attr-d][attr-e][attr-f] .form-preview {
@@ -963,7 +958,6 @@ s.setAttribute('data-timestamp', +new Date());
 </li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example">Code example</a></li>
 <li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#summary">Summary</a></li>
-<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#future-plan">Future plan</a></li>
 </ul>
   </nav></div>
 
