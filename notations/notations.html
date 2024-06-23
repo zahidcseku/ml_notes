@@ -661,7 +661,111 @@ document.write(`
 </section>
 <section id="code-example">
 <h2><a class="toc-backref" href="#id8" role="doc-backlink">Code example</a><a class="headerlink" href="#code-example" title="Link to this heading">#</a></h2>
-<p>In this code example, we will</p>
+<p>In this code example, we will generate 10 random instances of 5 dimensional inputs i.e., <span class="math notranslate nohighlight">\(n_\mathcal D=10\)</span>, <span class="math notranslate nohighlight">\(n_X=5\)</span>. Let’s consider the network consists of three layers (<span class="math notranslate nohighlight">\(L=3\)</span>) with <span class="math notranslate nohighlight">\(n^{[1]} = 8\)</span>, <span class="math notranslate nohighlight">\(n^{[2]} = 12\)</span>, and <span class="math notranslate nohighlight">\(n^{[3]} = 2\)</span>. The dimensions of our weight metrices will be <span class="math notranslate nohighlight">\(\mathbf W^{[1]}\)</span>, <span class="math notranslate nohighlight">\(\mathbf W^{[2]}\)</span> and <span class="math notranslate nohighlight">\(\mathbf W^{[3]}\)</span> are <span class="math notranslate nohighlight">\((8, 5)\)</span>, <span class="math notranslate nohighlight">\((12, 8)\)</span> and <span class="math notranslate nohighlight">\((2, 12)\)</span>. The shapes of the biases <span class="math notranslate nohighlight">\(\mathbf b^{[1]}\)</span>, <span class="math notranslate nohighlight">\(\mathbf b^{[2]}\)</span> and <span class="math notranslate nohighlight">\(\mathbf b^{[3]}\)</span> are <span class="math notranslate nohighlight">\((8, 1)\)</span>, <span class="math notranslate nohighlight">\((12, 1)\)</span> and <span class="math notranslate nohighlight">\((2, 1)\)</span>. We will generate the parameters randomly and using the equations discussed above we will compute <span class="math notranslate nohighlight">\(\mathbf a^{[l]}, l = 1,2,3\)</span>. We assume <span class="math notranslate nohighlight">\(\mathbf a^{[l]} = \mathbf z^{[l]} | l =1,2,3\)</span> i.e., we do not apply the activation functions.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># set up the variables</span>
+
+<span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+
+<span class="n">nd</span><span class="p">,</span> <span class="n">nx</span><span class="p">,</span> <span class="n">nl</span> <span class="o">=</span> <span class="mi">10</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">3</span>
+<span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">,</span> <span class="n">n3</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">12</span><span class="p">,</span> <span class="mi">2</span>
+
+<span class="c1"># input and parameters initializations</span>
+<span class="n">x</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">nd</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span>
+<span class="n">W1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">W2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n2</span><span class="p">,</span> <span class="n">n1</span><span class="p">)</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+<span class="n">W3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n3</span><span class="p">,</span> <span class="n">n2</span><span class="p">)</span>
+<span class="n">b3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">random</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">n3</span><span class="p">,</span> <span class="mi">1</span><span class="p">)</span>
+
+<span class="c1"># layer wise computations</span>
+<span class="n">a0</span> <span class="o">=</span> <span class="n">x</span><span class="o">.</span><span class="n">T</span>
+<span class="n">a1</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">W1</span><span class="p">,</span> <span class="n">a0</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a1: </span><span class="si">{</span><span class="n">a1</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">a2</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">W2</span><span class="p">,</span> <span class="n">a1</span><span class="p">)</span> <span class="o">+</span> <span class="n">b2</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a2: </span><span class="si">{</span><span class="n">a2</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">a3</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">W3</span><span class="p">,</span> <span class="n">a2</span><span class="p">)</span> <span class="o">+</span> <span class="n">b3</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a3: </span><span class="si">{</span><span class="n">a3</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Outputs of the network: </span><span class="si">{</span><span class="n">a3</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of a1: (8, 10)
+Shape of a2: (12, 10)
+Shape of a3: (2, 10)
+Outputs of the network: [[48.97514768 40.78006352 24.55718999 30.20303075 32.66306258 48.1979801
+  49.94261146 28.00091955 32.59358435 41.0307172 ]
+ [59.56719231 49.76893816 29.69656509 36.26551186 39.84596245 58.73617283
+  61.01766603 33.70259162 39.87323399 49.74898875]]
+</pre></div>
+</div>
+</div>
+</div>
+<p>Let’s, verify the results using pytorch. We will initialize the pytorch parameters and inputs using the same random tensors as our previous example.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span> 
+
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+
+<span class="n">l1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="n">n1</span><span class="p">)</span>
+<span class="n">l2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">n1</span><span class="p">,</span> <span class="n">n2</span><span class="p">)</span>
+<span class="n">l3</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">n2</span><span class="p">,</span> <span class="n">n3</span><span class="p">)</span>
+
+<span class="n">tensorX</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">x</span><span class="p">)</span>
+
+<span class="c1"># initialize same weights</span>
+<span class="n">l1</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">W1</span><span class="p">)</span>
+<span class="n">l1</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">b1</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
+
+<span class="n">l2</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">W2</span><span class="p">)</span>
+<span class="n">l2</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">b2</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
+
+<span class="n">l3</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">W3</span><span class="p">)</span>
+<span class="n">l3</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">from_numpy</span><span class="p">(</span><span class="n">b3</span><span class="o">.</span><span class="n">squeeze</span><span class="p">())</span>
+
+<span class="n">a1</span> <span class="o">=</span> <span class="n">l1</span><span class="p">(</span><span class="n">tensorX</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a1: </span><span class="si">{</span><span class="n">a1</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">a2</span> <span class="o">=</span> <span class="n">l2</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a1: </span><span class="si">{</span><span class="n">a2</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="n">a3</span> <span class="o">=</span> <span class="n">l3</span><span class="p">(</span><span class="n">a2</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of a3: </span><span class="si">{</span><span class="n">a3</span><span class="o">.</span><span class="n">shape</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">a3</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of a1: torch.Size([10, 8])
+Shape of a1: torch.Size([10, 12])
+Shape of a3: torch.Size([10, 2])
+tensor([[48.9751, 59.5672],
+        [40.7801, 49.7689],
+        [24.5572, 29.6966],
+        [30.2030, 36.2655],
+        [32.6631, 39.8460],
+        [48.1980, 58.7362],
+        [49.9426, 61.0177],
+        [28.0009, 33.7026],
+        [32.5936, 39.8732],
+        [41.0307, 49.7490]], dtype=torch.float64, grad_fn=&lt;AddmmBackward0&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>pytorch uses broadcasting in computations. Here, we used <code class="docutils literal notranslate"><span class="pre">squeeze()</span></code> to match the shape of the bias parameter with pytorch internals.</p>
+</div>
+<p>We see that outputs of both implementations are identical. That’s what we expect!</p>
 </section>
 <section id="summary">
 <h2><a class="toc-backref" href="#id9" role="doc-backlink">Summary</a><a class="headerlink" href="#summary" title="Link to this heading">#</a></h2>
@@ -797,8 +901,7 @@ s.setAttribute('data-timestamp', +new Date());
 })();
 </script>
 <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
-<script id="dsq-count-scr" src="[//https-zahidcseku-github-io-ml-notes.disqus.com/count.js](notion://https-zahidcseku-github-io-ml-notes.disqus.com/count.js)" async></script>
-</section>
+<script id="dsq-count-scr" src="[//https-zahidcseku-github-io-ml-notes.disqus.com/count.js](notion://https-zahidcseku-github-io-ml-notes.disqus.com/count.js)" async></script></section>
 </section>
 
     <script type="text/x-thebe-config">

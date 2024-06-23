@@ -1,3 +1,15 @@
+---
+jupytext:
+  formats: md:myst
+  text_representation:
+    extension: .md
+    format_name: myst
+kernelspec:
+  display_name: Python 3
+  language: python
+  name: python3
+---
+
 # Deep neural network notation
 
 ```{contents}
@@ -236,7 +248,80 @@ The iris dataset.
 ```
 
 ## Code example
-In this code example, we will 
+In this code example, we will generate 10 random instances of 5 dimensional inputs i.e., $n_\mathcal D=10$, $n_X=5$. Let's consider the network consists of three layers ($L=3$) with $n^{[1]} = 8$, $n^{[2]} = 12$, and $n^{[3]} = 2$. The dimensions of our weight metrices will be $\mathbf W^{[1]}$, $\mathbf W^{[2]}$ and $\mathbf W^{[3]}$ are $(8, 5)$, $(12, 8)$ and $(2, 12)$. The shapes of the biases $\mathbf b^{[1]}$, $\mathbf b^{[2]}$ and $\mathbf b^{[3]}$ are $(8, 1)$, $(12, 1)$ and $(2, 1)$. We will generate the parameters randomly and using the equations discussed above we will compute $\mathbf a^{[l]}, l = 1,2,3$. We assume $\mathbf a^{[l]} = \mathbf z^{[l]} | l =1,2,3$ i.e., we do not apply the activation functions. 
+
+```{code-cell} ipython3
+# set up the variables
+
+import numpy as np
+
+nd, nx, nl = 10, 5, 3
+n1, n2, n3 = 8, 12, 2
+
+# input and parameters initializations
+x = np.random.rand(nd, nx)
+W1 = np.random.rand(n1, nx)
+b1 = np.random.rand(n1, 1)
+W2 = np.random.rand(n2, n1)
+b2 = np.random.rand(n2, 1)
+W3 = np.random.rand(n3, n2)
+b3 = np.random.rand(n3, 1)
+
+# layer wise computations
+a0 = x.T
+a1 = np.matmul(W1, a0) + b1
+print(f"Shape of a1: {a1.shape}")
+
+a2 = np.matmul(W2, a1) + b2
+print(f"Shape of a2: {a2.shape}")
+
+a3 = np.matmul(W3, a2) + b3
+print(f"Shape of a3: {a3.shape}")
+
+print(f"Outputs of the network: {a3}")
+```
+
+Let's, verify the results using pytorch. We will initialize the pytorch parameters and inputs using the same random tensors as our previous example.
+
+```{code-cell} ipython3
+import torch 
+
+import torch.nn as nn
+
+l1 = nn.Linear(nx, n1)
+l2 = nn.Linear(n1, n2)
+l3 = nn.Linear(n2, n3)
+
+tensorX = torch.from_numpy(x)
+
+# initialize same weights
+l1.weight.data = torch.from_numpy(W1)
+l1.bias.data = torch.from_numpy(b1.squeeze())
+
+l2.weight.data = torch.from_numpy(W2)
+l2.bias.data = torch.from_numpy(b2.squeeze())
+
+l3.weight.data = torch.from_numpy(W3)
+l3.bias.data = torch.from_numpy(b3.squeeze())
+
+a1 = l1(tensorX)
+print(f"Shape of a1: {a1.shape}")
+
+a2 = l2(a1)
+print(f"Shape of a1: {a2.shape}")
+
+a3 = l3(a2)
+print(f"Shape of a3: {a3.shape}")
+
+print(a3)
+```
+
+```{note} 
+pytorch uses broadcasting in computations. Here, we used `squeeze()` to match the shape of the bias parameter with pytorch internals. 
+```
+
+We see that outputs of both implementations are identical. That's what we expect!
+
 
 ## Summary
 
