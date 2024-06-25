@@ -7,5 +7,4 @@ chapters:
 - file: notations/notations
 - file: rnn/rnnpart1
 - file: markdown
-- file: notebooks
 - file: markdown-notebooks

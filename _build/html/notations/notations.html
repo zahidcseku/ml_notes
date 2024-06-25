@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
   
@@ -52,7 +52,7 @@
     <script>let toggleOpenOnPrint = 'true';</script>
     <script src="../_static/togglebutton.js?v=4a39c7ea"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
-    <script src="../_static/design-tabs.js?v=36754332"></script>
+    <script src="../_static/design-tabs.js?v=f930bc37"></script>
     <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"; const thebe_selector = ".thebe,.cell"; const thebe_selector_input = "pre"; const thebe_selector_output = ".output, .cell_output"</script>
     <script async="async" src="../_static/sphinx-thebe.js?v=c100c467"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown';</script>
@@ -183,7 +183,6 @@
 <li class="toctree-l1 current active"><a class="current reference internal" href="#">Deep neural network notation</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../rnn/rnnpart1.html">Disentangling the LSTM model</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../markdown.html">Markdown Files</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../notebooks.html">Content with notebooks</a></li>
 <li class="toctree-l1"><a class="reference internal" href="../markdown-notebooks.html">Notebooks with MyST Markdown</a></li>
 </ul>
 
@@ -239,7 +238,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book" target="_blank"
+      <li><a href="https://github.com/zahidcseku/ml_notes" target="_blank"
    class="btn btn-sm btn-source-repository-button dropdown-item"
    title="Source repository"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -256,7 +255,7 @@
       
       
       
-      <li><a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fnotations/notations.html&body=Your%20issue%20content%20here." target="_blank"
+      <li><a href="https://github.com/zahidcseku/ml_notes/issues/new?title=Issue%20on%20page%20%2Fnotations/notations.html&body=Your%20issue%20content%20here." target="_blank"
    class="btn btn-sm btn-source-issues-button dropdown-item"
    title="Open an issue"
    data-bs-placement="left" data-bs-toggle="tooltip"
@@ -421,10 +420,10 @@ document.write(`
 </li>
 </ul>
 </nav>
-<p>A deep neural network (DNN) consists of multiple layers of computational units, called neurons. Each layer is arranged sequentially, and the units in each layer are arranged vertically. Each neuron (or unit) takes some input and produces an output. Consequently, a layer takes some inputs and produces some outputs using simple computations. When we say each layer takes inputs, we mean that each neuron in the layers takes inputs. In this section, I will discuss various notations used in deep neural networks. Most of the notations are adapted from Andrew Ng’s deep learning specialisation course. The notations involve multiple dimensions that can sometimes be confusing (actually, all the time when you start learning from different sources). When I started learning DNN, I got familiar with one set of notations from Andrew’s course and started representing other materials using the same notations (it was not a trivial task at the beginning).</p>
+<p>A deep neural network (DNN) consists of multiple layers of computational units, called neurons. Each layer is arranged sequentially, and the units in each layer are arranged vertically. Each neuron (or unit) takes some input and produces an output. Consequently, a layer takes some inputs and produces some outputs using simple computations. When we say each layer takes inputs, we mean that each neuron in a layer takes inputs. In this section, I will discuss various notations used in deep neural networks. Most of the notations are adapted from Andrew Ng’s deep learning specialization course. The notations involve multiple dimensions that can sometimes be confusing (actually, all the time when you start learning from different sources). When I started learning DNN, I got familiar with one set of notations from Andrew’s course and started representing other materials using the same notations (it was not a trivial task at the beginning but helped me a lot).</p>
 <section id="inputs-and-outputs-of-a-single-neuron">
 <h2><a class="toc-backref" href="#id3" role="doc-backlink">Inputs and outputs of a single neuron</a><a class="headerlink" href="#inputs-and-outputs-of-a-single-neuron" title="Link to this heading">#</a></h2>
-<p>Each neuron takes arbitrary <span class="math notranslate nohighlight">\(n_X\)</span> dimensional input <span class="math notranslate nohighlight">\(\mathbf X\)</span> and produces a single output <span class="math notranslate nohighlight">\(a\)</span>.</p>
+<p>Each neuron takes arbitrary <span class="math notranslate nohighlight">\(n_X\)</span> dimensional inputs <span class="math notranslate nohighlight">\(\mathbf X\)</span> and produces a single output <span class="math notranslate nohighlight">\(a\)</span>.</p>
 <figure class="align-center" id="single-neuron">
 <a class="reference internal image-reference" href="../_images/single-neuron.png"><img alt="../_images/single-neuron.png" src="../_images/single-neuron.png" style="width: 200px;" /></a>
 <figcaption>
@@ -433,11 +432,11 @@ document.write(`
 </figure>
 <p>The neuron’s output is calculated in two steps, as indicated by a circular + symbol and a rectangular <span class="math notranslate nohighlight">\(\sigma\)</span> symbol. A weighted sum is first computed as follows:</p>
 <div class="math notranslate nohighlight">
-\[z = x_0*w_0 + x_1*w_1 + \cdots + x_{n_X}*w_{n_X} + b = \sum_{i=0}^{n_X}x_i*w_i +b\]</div>
+\[z = x_1*w_1 + x_2*w_2 + \cdots + x_{n_X}*w_{n_X} + b = \sum_{i=1}^{n_X}x_i*w_i +b\]</div>
 <p>And then an activation function <span class="math notranslate nohighlight">\(\sigma\)</span> is applied to <span class="math notranslate nohighlight">\(z\)</span> to compute the output (called activation) of the unit as follows:</p>
 <div class="math notranslate nohighlight">
 \[a = \sigma\left(z\right)\]</div>
-<p>If we express the input and the weights as row vectors <span class="math notranslate nohighlight">\(\mathbf W = [w_0, w_1, \cdots, w_{n_X}]\)</span> and <span class="math notranslate nohighlight">\(\mathbf X =[x_1, x_2,\dots,x_{n_X}]\)</span>, we can achieve the same result using a vector operation:</p>
+<p>If we express the input and the weights as row vectors <span class="math notranslate nohighlight">\(\mathbf W = [w_1, w_2, \cdots, w_{n_X}]\)</span> and <span class="math notranslate nohighlight">\(\mathbf X  =[x_1, x_2,\dots,x_{n_X}]\)</span>, we can achieve the same result using a vector operation:</p>
 <div class="math notranslate nohighlight">
 \[a = \sigma(z) = \sigma(\mathbf W \cdot \mathbf X^\top + b)\]</div>
 <p><strong>Shapes</strong>: both the <span class="math notranslate nohighlight">\(\mathbf W\)</span> and <span class="math notranslate nohighlight">\(\mathbf X\)</span> are row vectors of shape <span class="math notranslate nohighlight">\((1, n_X)\)</span> and both <span class="math notranslate nohighlight">\(z\)</span> and <span class="math notranslate nohighlight">\(a\)</span> are scalars.</p>
@@ -497,29 +496,33 @@ document.write(`
 </figure>
 <p>Now that we have multiple units, we can’t express the weights as a vector anymore. The weights of each individual unit in the layer are still a vector (shape <span class="math notranslate nohighlight">\((1, n_X)\)</span>), and we need a matrix notation (by stacking the vectors) to express the weights of layer <span class="math notranslate nohighlight">\(l\)</span>. For <span class="math notranslate nohighlight">\(n^{[l]}\)</span> units, we will have <span class="math notranslate nohighlight">\(n^{[l]}\)</span> biases expressed as <span class="math notranslate nohighlight">\(\mathbf b^{[l]}\)</span>, which is a vector of shape <span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span>. We have multiple outputs from a layer, hence both <span class="math notranslate nohighlight">\(a\)</span> and <span class="math notranslate nohighlight">\(z\)</span> are now vectors of shape <span class="math notranslate nohighlight">\((n^{[l]}, 1)\)</span> and represented by: <span class="math notranslate nohighlight">\(\mathbf z^{[l]}\)</span> and <span class="math notranslate nohighlight">\(\mathbf a^{[l]}\)</span> respectively. Layer <span class="math notranslate nohighlight">\(l\)</span> performs the following operations:</p>
 <div class="math notranslate nohighlight">
-\[a^{[l]}_0 = \sigma^{[l]} (z^{[l]}_0) = \sigma^{[l]} \left(w^{[l]}_{00}x_0 + w^{[l]}_{01}x_1+\dots+w^{[l]}_{0n_X}x_{n_X}+b^{[l]}_0\right) = \sigma^{[l]} \left(\sum_i^{n_X} w^{[l]}_{0i}x^i + b^{[l]}_0\right)\]</div>
+\[
+a^{[l]}_1 = \sigma^{[l]} (z^{[l]}_1) = \sigma^{[l]} \left(w^{[l]}_{11}x_1 + w^{[l]}_{12}x_2+\dots+w^{[l]}_{1n_X}x_{n_X}+b^{[l]}_1\right) = \sigma^{[l]} \left(\sum_i^{n_X} w^{[l]}_{1i}x^i + b^{[l]}_1\right)
+\]</div>
 <div class="math notranslate nohighlight">
-\[a^{[l]}_1 = \sigma^{[l]} (z^{[l]}_1) = \sigma^{[l]} \left(w^{[l]}_{10}x_0 + w^{[l]}_{11}x_1+\dots+w^{[l]}_{1n_X}x_{n_X}+b^{[l]}_1\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{1i}x_i + b^{[l]}_1\right)\]</div>
+\[
+a^{[l]}_2 = \sigma^{[l]} (z^{[l]}_2) = \sigma^{[l]} \left(w^{[l]}_{21}x_1 + w^{[l]}_{22}x_2+\dots+w^{[l]}_{2n_X}x_{n_X}+b^{[l]}_2\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{2i}x_i + b^{[l]}_2\right)
+\]</div>
 <div class="math notranslate nohighlight">
 \[\dots\]</div>
 <div class="math notranslate nohighlight">
-\[a^{[l]}_{n^{[l]}} = \sigma^{[l]} (z^{[l]}_{n^{[l]}}) = \sigma^{[l]} \left(w^{[l]}_{n^{[l]}0}x_0 + w^{[l]}_{n^{[l]}1}x_1+\dots+w^{[l]}_{n^{[l]}n_X}x_{n_X}+b^{[l]}_{n^{[l]}}\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{n^{[l]}i}x_i + b^{[l]}_{n^{[l]}}\right)\]</div>
+\[a^{[l]}_{n^{[l]}} = \sigma^{[l]} (z^{[l]}_{n^{[l]}}) = \sigma^{[l]} \left(w^{[l]}_{n^{[l]}1}x_1 + w^{[l]}_{n^{[l]}2}x_2+\dots+w^{[l]}_{n^{[l]}n_X}x_{n_X}+b^{[l]}_{n^{[l]}}\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{n^{[l]}i}x_i + b^{[l]}_{n^{[l]}}\right)\]</div>
 <p>We can implement the above computations in python using only multiplications and additions.</p>
 <div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="n">output</span> <span class="o">=</span> <span class="p">[]</span>
 <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">nl</span><span class="p">):</span>
-	<span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
-	<span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
-		<span class="n">z</span> <span class="o">+=</span> <span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
-	<span class="n">z</span> <span class="o">+=</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
-	<span class="n">a</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
-	
-	<span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
+   <span class="n">z</span> <span class="o">=</span> <span class="mi">0</span>
+   <span class="k">for</span> <span class="n">j</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">n</span><span class="p">):</span>
+      <span class="n">z</span> <span class="o">+=</span> <span class="n">W</span><span class="p">[</span><span class="n">i</span><span class="p">][</span><span class="n">j</span><span class="p">]</span> <span class="o">*</span> <span class="n">x</span><span class="p">[</span><span class="n">j</span><span class="p">]</span>
+   <span class="n">z</span> <span class="o">+=</span> <span class="n">b</span><span class="p">[</span><span class="n">i</span><span class="p">]</span>
+   <span class="n">a</span> <span class="o">=</span> <span class="n">sigma</span><span class="p">(</span><span class="n">z</span><span class="p">)</span>
+   
+   <span class="n">output</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">a</span><span class="p">)</span>
 </pre></div>
 </div>
 <p>The equations and computations can be simplified using matrix operations. The weights of the matrix can be represented by:</p>
 <div class="math notranslate nohighlight">
 \[\begin{split}
-\mathbf W^{[l]} = \begin{bmatrix} w^{[l]}_{00} &amp; w^{[l]}_{01} &amp; \cdots &amp; w^{[l]}_{0n_X}\\ w^{[l]}_{10} &amp; w^{[l]}_{11} &amp; \cdots &amp; w^{[l]}_{1n_X}\\\cdots&amp;\cdots&amp;\cdots&amp;\cdots\\w^{[l]}_{n^{[l]}0} &amp; w^{[l]}_{n^{[l]}1} &amp; \cdots &amp; w^{[l]}_{n^{[l]}n_X}\end{bmatrix}
+\mathbf W^{[l]} = \begin{bmatrix} w^{[l]}_{11} &amp; w^{[l]}_{12} &amp; \cdots &amp; w^{[l]}_{1n_X}\\ w^{[l]}_{21} &amp; w^{[l]}_{22} &amp; \cdots &amp; w^{[l]}_{2n_X}\\\cdots&amp;\cdots&amp;\cdots&amp;\cdots\\w^{[l]}_{n^{[l]}1} &amp; w^{[l]}_{n^{[l]}2} &amp; \cdots &amp; w^{[l]}_{n^{[l]}n_X}\end{bmatrix}
 \end{split}\]</div>
 <p>The dimension of <span class="math notranslate nohighlight">\(\mathbf W^{[l]}\)</span> depends on the input dimension <span class="math notranslate nohighlight">\(n_X\)</span> and the number of units (which is same as the output dimension of the layer) <span class="math notranslate nohighlight">\(n^{[l]}\)</span> i.e., <span class="math notranslate nohighlight">\((n^{[l]}, n_X)\)</span>. Using the matrix notations, the computations are:</p>
 <div class="math notranslate nohighlight">
@@ -691,10 +694,10 @@ document.write(`
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Outputs of the network
-[[75.98321879 41.61443243 65.43336042 85.93272625 56.4863757  79.38183821
-  68.03412485 77.46655514 51.84885633 62.4376285 ]
- [66.86983208 37.04062736 57.93844585 75.49550147 49.99550721 70.14955942
-  59.82419454 68.14586269 45.81128703 55.17665594]]
+[[52.29927985 58.58839225 53.0527216  52.2445305  47.31987283 35.77892804
+  38.32255528 59.46530816 50.45993884 41.22109301]
+ [53.06862704 59.32661551 53.93006841 52.73120417 48.02108006 35.96371392
+  38.64028637 60.18711754 51.32406187 41.39519127]]
 </pre></div>
 </div>
 </div>
@@ -731,16 +734,16 @@ document.write(`
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[75.9832, 66.8698],
-        [41.6144, 37.0406],
-        [65.4334, 57.9384],
-        [85.9327, 75.4955],
-        [56.4864, 49.9955],
-        [79.3818, 70.1496],
-        [68.0341, 59.8242],
-        [77.4666, 68.1459],
-        [51.8489, 45.8113],
-        [62.4376, 55.1767]], dtype=torch.float64, grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[52.2993, 53.0686],
+        [58.5884, 59.3266],
+        [53.0527, 53.9301],
+        [52.2445, 52.7312],
+        [47.3199, 48.0211],
+        [35.7789, 35.9637],
+        [38.3226, 38.6403],
+        [59.4653, 60.1871],
+        [50.4599, 51.3241],
+        [41.2211, 41.3952]], dtype=torch.float64, grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>

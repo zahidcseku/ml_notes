@@ -15,10 +15,10 @@ kernelspec:
 ```{contents}
 ```
 
-A deep neural network (DNN) consists of multiple layers of computational units, called neurons. Each layer is arranged sequentially, and the units in each layer are arranged vertically. Each neuron (or unit) takes some input and produces an output. Consequently, a layer takes some inputs and produces some outputs using simple computations. When we say each layer takes inputs, we mean that each neuron in the layers takes inputs. In this section, I will discuss various notations used in deep neural networks. Most of the notations are adapted from Andrew Ng’s deep learning specialisation course. The notations involve multiple dimensions that can sometimes be confusing (actually, all the time when you start learning from different sources). When I started learning DNN, I got familiar with one set of notations from Andrew’s course and started representing other materials using the same notations (it was not a trivial task at the beginning).
+A deep neural network (DNN) consists of multiple layers of computational units, called neurons. Each layer is arranged sequentially, and the units in each layer are arranged vertically. Each neuron (or unit) takes some input and produces an output. Consequently, a layer takes some inputs and produces some outputs using simple computations. When we say each layer takes inputs, we mean that each neuron in a layer takes inputs. In this section, I will discuss various notations used in deep neural networks. Most of the notations are adapted from Andrew Ng’s deep learning specialization course. The notations involve multiple dimensions that can sometimes be confusing (actually, all the time when you start learning from different sources). When I started learning DNN, I got familiar with one set of notations from Andrew’s course and started representing other materials using the same notations (it was not a trivial task at the beginning but helped me a lot).
 
 ## Inputs and outputs of a single neuron
-Each neuron takes arbitrary $n_X$ dimensional input $\mathbf X$ and produces a single output $a$. 
+Each neuron takes arbitrary $n_X$ dimensional inputs $\mathbf X$ and produces a single output $a$. 
 
 ```{figure} single-neuron.png
 ---
@@ -31,13 +31,13 @@ A single neural processing unit which takes $n_X$ dimensional inputs and generat
 
 The neuron's output is calculated in two steps, as indicated by a circular + symbol and a rectangular $\sigma$ symbol. A weighted sum is first computed as follows:
 
-$$z = x_0*w_0 + x_1*w_1 + \cdots + x_{n_X}*w_{n_X} + b = \sum_{i=0}^{n_X}x_i*w_i +b$$
+$$z = x_1*w_1 + x_2*w_2 + \cdots + x_{n_X}*w_{n_X} + b = \sum_{i=1}^{n_X}x_i*w_i +b$$
 
 And then an activation function $\sigma$ is applied to $z$ to compute the output (called activation) of the unit as follows:
 
 $$a = \sigma\left(z\right)$$
 
-If we express the input and the weights as row vectors $\mathbf W = [w_0, w_1, \cdots, w_{n_X}]$ and $\mathbf X =[x_1, x_2,\dots,x_{n_X}]$, we can achieve the same result using a vector operation:
+If we express the input and the weights as row vectors $\mathbf W = [w_1, w_2, \cdots, w_{n_X}]$ and $\mathbf X  =[x_1, x_2,\dots,x_{n_X}]$, we can achieve the same result using a vector operation:
 
 $$a = \sigma(z) = \sigma(\mathbf W \cdot \mathbf X^\top + b)$$
 
@@ -92,32 +92,36 @@ A single layer processing unit that takes $n_X$ dimensional inputs and produces 
 
 Now that we have multiple units, we can't express the weights as a vector anymore. The weights of each individual unit in the layer are still a vector (shape $(1, n_X)$), and we need a matrix notation (by stacking the vectors) to express the weights of layer $l$. For $n^{[l]}$ units, we will have $n^{[l]}$ biases expressed as $\mathbf b^{[l]}$, which is a vector of shape $(n^{[l]}, 1)$. We have multiple outputs from a layer, hence both $a$ and $z$ are now vectors of shape $(n^{[l]}, 1)$ and represented by: $\mathbf z^{[l]}$ and $\mathbf a^{[l]}$ respectively. Layer $l$ performs the following operations:
 
-$$a^{[l]}_0 = \sigma^{[l]} (z^{[l]}_0) = \sigma^{[l]} \left(w^{[l]}_{00}x_0 + w^{[l]}_{01}x_1+\dots+w^{[l]}_{0n_X}x_{n_X}+b^{[l]}_0\right) = \sigma^{[l]} \left(\sum_i^{n_X} w^{[l]}_{0i}x^i + b^{[l]}_0\right)$$
+$$
+a^{[l]}_1 = \sigma^{[l]} (z^{[l]}_1) = \sigma^{[l]} \left(w^{[l]}_{11}x_1 + w^{[l]}_{12}x_2+\dots+w^{[l]}_{1n_X}x_{n_X}+b^{[l]}_1\right) = \sigma^{[l]} \left(\sum_i^{n_X} w^{[l]}_{1i}x^i + b^{[l]}_1\right)
+$$
 
-$$a^{[l]}_1 = \sigma^{[l]} (z^{[l]}_1) = \sigma^{[l]} \left(w^{[l]}_{10}x_0 + w^{[l]}_{11}x_1+\dots+w^{[l]}_{1n_X}x_{n_X}+b^{[l]}_1\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{1i}x_i + b^{[l]}_1\right)$$
+$$
+a^{[l]}_2 = \sigma^{[l]} (z^{[l]}_2) = \sigma^{[l]} \left(w^{[l]}_{21}x_1 + w^{[l]}_{22}x_2+\dots+w^{[l]}_{2n_X}x_{n_X}+b^{[l]}_2\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{2i}x_i + b^{[l]}_2\right)
+$$
 
 $$\dots$$
 
-$$a^{[l]}_{n^{[l]}} = \sigma^{[l]} (z^{[l]}_{n^{[l]}}) = \sigma^{[l]} \left(w^{[l]}_{n^{[l]}0}x_0 + w^{[l]}_{n^{[l]}1}x_1+\dots+w^{[l]}_{n^{[l]}n_X}x_{n_X}+b^{[l]}_{n^{[l]}}\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{n^{[l]}i}x_i + b^{[l]}_{n^{[l]}}\right)$$
+$$a^{[l]}_{n^{[l]}} = \sigma^{[l]} (z^{[l]}_{n^{[l]}}) = \sigma^{[l]} \left(w^{[l]}_{n^{[l]}1}x_1 + w^{[l]}_{n^{[l]}2}x_2+\dots+w^{[l]}_{n^{[l]}n_X}x_{n_X}+b^{[l]}_{n^{[l]}}\right)=\sigma^{[l]}\left(\sum_{i}^{n_X} w^{[l]}_{n^{[l]}i}x_i + b^{[l]}_{n^{[l]}}\right)$$
 
 We can implement the above computations in python using only multiplications and additions.
 
 ```python
 output = []
 for i in range(nl):
-	z = 0
-	for j in range(n):
-		z += W[i][j] * x[j]
-	z += b[i]
-	a = sigma(z)
-	
-	output.append(a)
+   z = 0
+   for j in range(n):
+      z += W[i][j] * x[j]
+   z += b[i]
+   a = sigma(z)
+   
+   output.append(a)
 ```
 
 The equations and computations can be simplified using matrix operations. The weights of the matrix can be represented by:
 
 $$
-\mathbf W^{[l]} = \begin{bmatrix} w^{[l]}_{00} & w^{[l]}_{01} & \cdots & w^{[l]}_{0n_X}\\ w^{[l]}_{10} & w^{[l]}_{11} & \cdots & w^{[l]}_{1n_X}\\\cdots&\cdots&\cdots&\cdots\\w^{[l]}_{n^{[l]}0} & w^{[l]}_{n^{[l]}1} & \cdots & w^{[l]}_{n^{[l]}n_X}\end{bmatrix}
+\mathbf W^{[l]} = \begin{bmatrix} w^{[l]}_{11} & w^{[l]}_{12} & \cdots & w^{[l]}_{1n_X}\\ w^{[l]}_{21} & w^{[l]}_{22} & \cdots & w^{[l]}_{2n_X}\\\cdots&\cdots&\cdots&\cdots\\w^{[l]}_{n^{[l]}1} & w^{[l]}_{n^{[l]}2} & \cdots & w^{[l]}_{n^{[l]}n_X}\end{bmatrix}
 $$
 
 The dimension of $\mathbf W^{[l]}$ depends on the input dimension $n_X$ and the number of units (which is same as the output dimension of the layer) $n^{[l]}$ i.e., $(n^{[l]}, n_X)$. Using the matrix notations, the computations are:
