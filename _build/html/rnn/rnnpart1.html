@@ -32,7 +32,7 @@
     <link rel="stylesheet" type="text/css" href="../_static/styles/sphinx-book-theme.css?v=a3416100" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css?v=13237357" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css?v=76b2166b" />
-    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.4510f1fc1dee50b3e5859aac5469c37c29e427902b24a333a5f9fcb2f0b3ac41.css?v=be8a1c11" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css?v=4fa983c6" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-design.min.css?v=87e54e7c" />
   
@@ -356,7 +356,9 @@ document.write(`
   </button>
 `);
 </script>
-
+<button class="sidebar-toggle secondary-toggle btn btn-sm" title="Toggle secondary sidebar" data-bs-placement="bottom" data-bs-toggle="tooltip">
+    <span class="fa-solid fa-list"></span>
+</button>
 </div></div>
       
     </div>
@@ -372,6 +374,17 @@ document.write(`
     <div id="print-main-content">
         <div id="jb-print-toc">
             
+            <div>
+                <h2> Contents </h2>
+            </div>
+            <nav aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computations-in-feed-forward-network">Computations in feed forward network</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example">Code example</a></li>
+</ul>
+</li>
+</ul>
+            </nav>
         </div>
     </div>
 </div>
@@ -418,6 +431,139 @@ only mention in which category our examples belong.</span><a class="headerlink" 
 </div>
 </figcaption>
 </figure>
+<section id="computations-in-feed-forward-network">
+<h2>Computations in feed forward network<a class="headerlink" href="#computations-in-feed-forward-network" title="Link to this heading">#</a></h2>
+<p>Before discussing LSTM, let’s talk about simple feed forward neural networks (aka multi layer perceptrons or MLP). I like to think of a neural network as computational unit or a parametric function <span class="math notranslate nohighlight">\(f_{\Theta}(.)\)</span> that takes numeric inputs (<span class="math notranslate nohighlight">\(\mathbf X\)</span>) of a certain dimension <span class="math notranslate nohighlight">\(n_X\)</span> and produces outputs (<span class="math notranslate nohighlight">\(\mathbf y\)</span>) of dimension <span class="math notranslate nohighlight">\(n_y\)</span> through a series of computations arranged in layers i.e., <span class="math notranslate nohighlight">\(\mathbf y = f_\Theta(\mathbf X)\)</span> where <span class="math notranslate nohighlight">\(\Theta\)</span> is the set of parameters i.e., weights and biases. If we have a three layer network then <span class="math notranslate nohighlight">\(\Theta\)</span> includes weights and biases corresponding to the three layers <span class="math notranslate nohighlight">\(\{\mathbf W^{[1]}, \mathbf W^{[2]}, \mathbf W^{[3]}, \mathbf b^{[1]}, \mathbf b^{[2]}, \mathbf b^{[3]}\}\)</span>. (Read <a class="reference external" href="https://zahidcseku.github.io/ml_notes/notations/notations.html">Deep neural network notaion</a> for a detailed discussion on deep neural network notations and computations).</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The input to a neuron unit can be of any dimension (depends on the input features or the dimension of the preceding layer’s output), but an individual unit always provides one output. This implies that the number of units in a layer depends on the desired output dimension of the layer.</p>
+</div>
+<section id="code-example">
+<h3>Code example<a class="headerlink" href="#code-example" title="Link to this heading">#</a></h3>
+<p>Let’s generate a dataset <span class="math notranslate nohighlight">\(\mathbf X\)</span> with <span class="math notranslate nohighlight">\(n_\mathcal D\)</span> instances and feed <span class="math notranslate nohighlight">\(\mathbf X\)</span> to a 2-layer MLP with <span class="math notranslate nohighlight">\(n^{[1]}=8\)</span> and <span class="math notranslate nohighlight">\(n^{[2]}=1\)</span> neuron units (<span class="math notranslate nohighlight">\(n^{[l]}\)</span> represents the number of units in layer <span class="math notranslate nohighlight">\(l\)</span>). From the network, we get <span class="math notranslate nohighlight">\(n_y =1\)</span> dimensional outputs <span class="math notranslate nohighlight">\(\mathbf y\)</span> for each instance in <span class="math notranslate nohighlight">\(\mathbf X\)</span>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">torch</span>
+<span class="kn">import</span> <span class="nn">torch.nn</span> <span class="k">as</span> <span class="nn">nn</span>
+
+<span class="n">nd</span><span class="p">,</span> <span class="n">nx</span> <span class="o">=</span> <span class="mi">15</span><span class="p">,</span> <span class="mi">5</span>
+
+<span class="c1"># number of units per layer</span>
+<span class="n">n1</span><span class="p">,</span> <span class="n">n2</span> <span class="o">=</span> <span class="mi">8</span><span class="p">,</span> <span class="mi">1</span>
+
+<span class="c1"># generating random inputs</span>
+<span class="n">X</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">rand</span><span class="p">(</span><span class="n">nd</span><span class="p">,</span> <span class="n">nx</span><span class="p">)</span>
+
+<span class="c1"># create the model</span>
+<span class="n">layer1</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="n">nx</span><span class="p">,</span> <span class="mi">8</span><span class="p">)</span>
+<span class="n">layer2</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Linear</span><span class="p">(</span><span class="mi">8</span><span class="p">,</span> <span class="n">n2</span><span class="p">)</span>
+
+<span class="n">net</span> <span class="o">=</span> <span class="n">nn</span><span class="o">.</span><span class="n">Sequential</span><span class="p">(</span><span class="n">layer1</span><span class="p">,</span> <span class="n">layer2</span><span class="p">)</span>
+
+<span class="c1"># feed the inputs to the network</span>
+<span class="n">y</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0160],
+        [-0.1512],
+        [-0.1210],
+        [-0.0626],
+        [-0.0584],
+        [-0.0388],
+        [ 0.0313],
+        [-0.0867],
+        [-0.1454],
+        [-0.0869],
+        [ 0.0595],
+        [-0.0992],
+        [-0.0906],
+        [-0.0356],
+        [-0.0181]], grad_fn=&lt;AddmmBackward0&gt;)
+</pre></div>
+</div>
+</div>
+</div>
+<p>Here, <code class="docutils literal notranslate"><span class="pre">net()</span></code> transforms <span class="math notranslate nohighlight">\(\mathbf X \in \mathbb R^5\)</span> to produce outputs <span class="math notranslate nohighlight">\(\mathbf y\in\mathbb R\)</span>. First, <code class="docutils literal notranslate"><span class="pre">layer1</span></code> takes <span class="math notranslate nohighlight">\(\mathbf X\)</span> and produces outputs <span class="math notranslate nohighlight">\(\mathbf a^{[1]}\)</span> (dimension <span class="math notranslate nohighlight">\((n_\mathcal D, n^{[1]})\)</span>). Then, ativations <span class="math notranslate nohighlight">\(\mathbf a^{[1]}\)</span> are fed to <code class="docutils literal notranslate"><span class="pre">layer2</span></code> and layer 2 generates <span class="math notranslate nohighlight">\(\mathbf a^{[2]} = \mathbf y\)</span> (dimension <span class="math notranslate nohighlight">\((n_\mathcal D, n_y)\)</span>). We consider liner activations in all layers.</p>
+<p>From <a class="reference external" href="https://pytorch.org/docs/stable/generated/torch.nn.Linear.html">PyTorch documentation</a> we find: <code class="docutils literal notranslate"><span class="pre">nn.Linear</span></code> transforms the data as <span class="math notranslate nohighlight">\(y = xA^\top + b\)</span>. We also learn that the shapes of the weights <span class="math notranslate nohighlight">\(A\)</span> are <code class="docutils literal notranslate"><span class="pre">(out_features,</span> <span class="pre">in_features)</span></code> and biases are <code class="docutils literal notranslate"><span class="pre">(out_features)</span></code>. Hence, for PyTorch, the shapes of weights and biases of layer 1 are <code class="docutils literal notranslate"><span class="pre">shape($A^{[1]}$)</span></code> = <span class="math notranslate nohighlight">\((n^{[1]}, n_X)\)</span> = <span class="math notranslate nohighlight">\((8, 5)\)</span> and <code class="docutils literal notranslate"><span class="pre">shape($b^{[1]}$)=$8$</span></code>. The shapes of weights and biases of layer 2 are <code class="docutils literal notranslate"><span class="pre">shape($A^{[2]}$)</span></code> = <span class="math notranslate nohighlight">\((n^{[2]}, n^{[1]})\)</span> = <span class="math notranslate nohighlight">\((1, 8)\)</span> and <code class="docutils literal notranslate"><span class="pre">shape($b^{[2]}$)</span></code>=<span class="math notranslate nohighlight">\(1\)</span>. Let’s check the shapes in pytorch:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of layer 1 weight matrix: </span><span class="si">{</span><span class="n">layer1</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of layer 1 bias vector: </span><span class="si">{</span><span class="n">layer1</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of layer 2 weight matrix: </span><span class="si">{</span><span class="n">layer2</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Shape of layer 2 bias vector: </span><span class="si">{</span><span class="n">layer2</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">size</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Shape of layer 1 weight matrix: torch.Size([8, 5])
+Shape of layer 1 bias vector: torch.Size([8])
+Shape of layer 2 weight matrix: torch.Size([1, 8])
+Shape of layer 2 bias vector: torch.Size([1])
+</pre></div>
+</div>
+</div>
+</div>
+<p>We can investigate the outputs of the layers using the equation  <span class="math notranslate nohighlight">\(y = xA^\top + b\)</span>. The layer wise computations can be given by:</p>
+<div class="math notranslate nohighlight">
+\[\begin{split}
+a^{[1]} = xA^{[1]\top} + b^{[1]}\\
+a^{[2]} = xA^{[2]\top} + b^{[2]}
+\end{split}\]</div>
+<p>For layer 1 outputs we used <span class="math notranslate nohighlight">\(a\)</span> to represent activations and for layer 2 the activations <span class="math notranslate nohighlight">\(a^{[2]}\)</span> are the outputs <span class="math notranslate nohighlight">\(\mathbf y\)</span>. We can implement the equation in PyTorch without passing the inputs through the <code class="docutils literal notranslate"><span class="pre">net()</span></code>:</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># output using pytorch layer</span>
+<span class="n">a1</span> <span class="o">=</span> <span class="n">layer1</span><span class="p">(</span><span class="n">X</span><span class="p">)</span>
+
+<span class="c1"># output using equation</span>
+<span class="c1"># get the weights and biases in layer 1</span>
+<span class="n">w1</span> <span class="o">=</span> <span class="n">layer1</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span>
+<span class="n">b1</span> <span class="o">=</span> <span class="n">layer1</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span>
+<span class="n">a1_eq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">X</span><span class="p">,</span> <span class="n">w1</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">b1</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Layer 1 outputs using pytorch and equation are same: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span><span class="n">a1_eq</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+
+<span class="c1"># output using pytorch layer</span>
+<span class="n">a2</span> <span class="o">=</span> <span class="n">layer2</span><span class="p">(</span><span class="n">a1</span><span class="p">)</span>
+
+<span class="c1"># output using equation</span>
+<span class="c1"># get the weights and biases in layer 2</span>
+<span class="n">w2</span> <span class="o">=</span> <span class="n">layer2</span><span class="o">.</span><span class="n">weight</span><span class="o">.</span><span class="n">data</span>
+<span class="n">b2</span> <span class="o">=</span> <span class="n">layer2</span><span class="o">.</span><span class="n">bias</span><span class="o">.</span><span class="n">data</span>
+<span class="n">a2_eq</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">matmul</span><span class="p">(</span><span class="n">a1</span><span class="p">,</span> <span class="n">w2</span><span class="o">.</span><span class="n">T</span><span class="p">)</span> <span class="o">+</span> <span class="n">b2</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Layer 2 outputs using pytorch and equation are same: </span><span class="si">{</span><span class="n">torch</span><span class="o">.</span><span class="n">equal</span><span class="p">(</span><span class="n">a2</span><span class="p">,</span><span class="n">a2_eq</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Layer 1 outputs using pytorch and equation are same: True
+Layer 2 outputs using pytorch and equation are same: True
+</pre></div>
+</div>
+</div>
+</div>
+<p>The network processes <span class="math notranslate nohighlight">\(n_\mathcal D\)</span> instances at a time through matrix multiplication. However, we can achieve the same results using a loop as follows (this simple exercise will help us understand LSTM computations discussed below).</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="c1"># initialize a variable same shape as y to store the step wise results</span>
+<span class="n">loop_y</span> <span class="o">=</span> <span class="n">torch</span><span class="o">.</span><span class="n">zeros_like</span><span class="p">(</span><span class="n">y</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">X</span><span class="o">.</span><span class="n">size</span><span class="p">()[</span><span class="mi">0</span><span class="p">]):</span>
+    <span class="n">loop_y</span><span class="p">[</span><span class="n">i</span><span class="p">]</span> <span class="o">=</span> <span class="n">net</span><span class="p">(</span><span class="n">X</span><span class="p">[</span><span class="n">i</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">loop_y</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>When implementing neural networks using any framework, such as Pytorch, Keras, TensorFlow, etc., it’s important to understand the inputs and outputs specific to that framework. This article will focus on PyTorch.</p>
+</div>
+<p>From PyTorch documentation we find the input and output specification of linear layer <code class="docutils literal notranslate"><span class="pre">nn.Linear</span></code> as input: <span class="math notranslate nohighlight">\((*, H_{in})\)</span> and output: <span class="math notranslate nohighlight">\((*, H_{out})\)</span>. <span class="math notranslate nohighlight">\(H_{in}\)</span> and <span class="math notranslate nohighlight">\(H_{out}\)</span> are the input and output dimensions of a layer. According to the above example task for the first layer <span class="math notranslate nohighlight">\(H_{in}=5\)</span> and <span class="math notranslate nohighlight">\(H_{out}=8\)</span>. The <span class="math notranslate nohighlight">\(*\)</span> symbol means that whatever many of <span class="math notranslate nohighlight">\(H_{in}\)</span> dimensional instances we feed into the linear layer we get the same number of <span class="math notranslate nohighlight">\(H_{out}\)</span> dimensional outputs. The <span class="math notranslate nohighlight">\(*\)</span> depends on the batch size (the batch size is the number of instances we want to process at a time). For a batch size of 15 the inputs will be <span class="math notranslate nohighlight">\((15, 5)\)</span> and outputs of the layer will be <span class="math notranslate nohighlight">\((15, 8)\)</span>.</p>
+</section>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -474,6 +620,24 @@ only mention in which category our examples belong.</span><a class="headerlink" 
             </div>
             
             
+              
+                <div class="bd-sidebar-secondary bd-toc"><div class="sidebar-secondary-items sidebar-secondary__inner">
+
+
+  <div class="sidebar-secondary-item">
+  <div class="page-toc tocsection onthispage">
+    <i class="fa-solid fa-list"></i> Contents
+  </div>
+  <nav class="bd-toc-nav page-toc">
+    <ul class="visible nav section-nav flex-column">
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#computations-in-feed-forward-network">Computations in feed forward network</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example">Code example</a></li>
+</ul>
+</li>
+</ul>
+  </nav></div>
+
+</div></div>
               
             
           </div>
