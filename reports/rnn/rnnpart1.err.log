@@ -1,0 +1,56 @@
+Traceback (most recent call last):
+  File "/opt/homebrew/lib/python3.11/site-packages/jupyter_cache/executors/utils.py", line 58, in single_nb_execution
+    executenb(
+  File "/opt/homebrew/lib/python3.11/site-packages/nbclient/client.py", line 1314, in execute
+    return NotebookClient(nb=nb, resources=resources, km=km, **kwargs).execute()
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/jupyter_core/utils/__init__.py", line 165, in wrapped
+    return loop.run_until_complete(inner)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/opt/homebrew/Cellar/python@3.11/3.11.9/Frameworks/Python.framework/Versions/3.11/lib/python3.11/asyncio/base_events.py", line 654, in run_until_complete
+    return future.result()
+           ^^^^^^^^^^^^^^^
+  File "/opt/homebrew/lib/python3.11/site-packages/nbclient/client.py", line 709, in async_execute
+    await self.async_execute_cell(
+  File "/opt/homebrew/lib/python3.11/site-packages/nbclient/client.py", line 1062, in async_execute_cell
+    await self._check_raise_for_error(cell, cell_index, exec_reply)
+  File "/opt/homebrew/lib/python3.11/site-packages/nbclient/client.py", line 918, in _check_raise_for_error
+    raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
+nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
+------------------
+# output using pytorch layer
+a1 = layer1(X)
+
+# output using equation
+# get the weights and biases in layer 1
+w1 = layer1.weight.data
+b1 = layer1.bias.data
+a1_eq = torch.matmul(X, w1.T) + b1
+
+print(f"Layer 1 outputs using pytorch and equation are same: {torch.equal(a1,a1_eq)}")
+
+# output using pytorch layer
+y = layer2(a1)
+
+# output using equation
+# get the weights and biases in layer 2
+w2 = layer2.weight.data
+b2 = layer2.bias.data
+a2_eq = torch.matmul(a1, w2.T) + b2
+
+print(f"Layer 2 outputs using pytorch and equation are same: {torch.equal(a2,a2_eq)}")
+------------------
+
+----- stdout -----
+Layer 1 outputs using pytorch and equation are same: True
+------------------
+
+[0;31m---------------------------------------------------------------------------[0m
+[0;31mNameError[0m                                 Traceback (most recent call last)
+Cell [0;32mIn[3], line 21[0m
+[1;32m     18[0m b2 [38;5;241m=[39m layer2[38;5;241m.[39mbias[38;5;241m.[39mdata
+[1;32m     19[0m a2_eq [38;5;241m=[39m torch[38;5;241m.[39mmatmul(a1, w2[38;5;241m.[39mT) [38;5;241m+[39m b2
+[0;32m---> 21[0m [38;5;28mprint[39m([38;5;124mf[39m[38;5;124m"[39m[38;5;124mLayer 2 outputs using pytorch and equation are same: [39m[38;5;132;01m{[39;00mtorch[38;5;241m.[39mequal([43ma2[49m,a2_eq)[38;5;132;01m}[39;00m[38;5;124m"[39m)
+
+[0;31mNameError[0m: name 'a2' is not defined
+
