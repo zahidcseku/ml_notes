@@ -216,7 +216,7 @@ Using the activation notations, $\mathbf a^{[0]}=\mathbf X^\top$ and $\mathbf a^
 
 $$\mathbf z^{[l]} = W^{[l]}\cdot \mathbf a^{[l-1]} + \mathbf b^{[l]}$$
 
-$$a^{[l]} = \sigma^{[l]}\left (\mathbf z^{[l]}\right)$$
+$$\mathbf a^{[l]} = \sigma^{[l]}\left (\mathbf z^{[l]}\right)$$
 
 for $l=1,2,\dots,L$
 
@@ -340,7 +340,7 @@ $$\mathbf a^{[2]} = \sigma^{[2]}\left(W^{[2]}\cdot \mathbf a^{[1]} + \mathbf b^{
 
 $$\mathbf a^{[3]} = \sigma^{[3]}\left(W^{[3]}\cdot \mathbf a^{[2]} + \mathbf b^{[3]}\right)=\mathbf{\hat y}$$
 
-The shapes of $a^{[1]}, a^{[2]}$ and $a^{[3]}$  are $(8, 500), (16, 500)$ and $(3, 500)$. 
+The shapes of $\mathbf a^{[1]}, \mathbf a^{[2]}$ and $\mathbf a^{[3]}$  are $(8, 500), (16, 500)$ and $(3, 500)$. 
 
 
 In future, I will discuss the forward and backward propagation through a neural network using a complete example. Stay tuned:

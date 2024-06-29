@@ -383,6 +383,12 @@ document.write(`
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example">Code example</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-sequence-data-anyway">What is sequence data anyway?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-text-data">Example (text data)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-non-text-data">Example (non text data)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architectures-ref-figure-c">Architectures (ref: <span class="xref std std-ref">Figure</span> (c))</a></li>
 </ul>
             </nav>
         </div>
@@ -416,14 +422,14 @@ order in sequence data. If you are not familiar with this please read <a class="
 of Recurrent Neural Networks</strong></a> and <a class="reference external" href="https://colah.github.io/posts/2015-08-Understanding-LSTMs/"><strong>Understanding
 LSTM Networks</strong></a>. More than <span class="math notranslate nohighlight">\(90\%\)</span> resources on
 RNN and LSTM include one of the figures (or a variation of them) shown below.</p>
-<figure class="align-center" id="figure1">
+<figure class="align-center" id="figure1-rnn">
 <a class="reference internal image-reference" href="../_images/figure1.png"><img alt="../_images/figure1.png" src="../_images/figure1.png" style="width: 450px;" /></a>
 <figcaption>
 <p><span class="caption-number">Fig. 5 </span><span class="caption-text">The most common illustrations on RNN and LSTM. (a) Time unrolled RNN model showing how RNNs process
 inputs sequentially. Remember there is a single network processing the inputs. This image is illustrating the
 recurrence relations among the inputs. (b) The inner connections in the LSTM model. (c) Showing variations of RNNs
 based of the number of inputs and outputs. I will not discuss about all the variations in this article. I will
-only mention in which category our examples belong.</span><a class="headerlink" href="#figure1" title="Link to this image">#</a></p>
+only mention in which category our examples belong.</span><a class="headerlink" href="#figure1-rnn" title="Link to this image">#</a></p>
 <div class="legend">
 <p>Image sources: [<strong>The Unreasonable Effectiveness of Recurrent Neural Networks</strong>]
 (<a class="reference external" href="https://karpathy.github.io/2015/05/21/rnn-effectiveness/">https://karpathy.github.io/2015/05/21/rnn-effectiveness/</a>),  [<strong>Understanding LSTM Networks</strong>]
@@ -468,21 +474,21 @@ only mention in which category our examples belong.</span><a class="headerlink" 
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.0160],
-        [-0.1512],
-        [-0.1210],
-        [-0.0626],
-        [-0.0584],
-        [-0.0388],
-        [ 0.0313],
-        [-0.0867],
-        [-0.1454],
-        [-0.0869],
-        [ 0.0595],
-        [-0.0992],
-        [-0.0906],
-        [-0.0356],
-        [-0.0181]], grad_fn=&lt;AddmmBackward0&gt;)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>tensor([[-0.1577],
+        [-0.2189],
+        [-0.0259],
+        [-0.1958],
+        [-0.1014],
+        [-0.1586],
+        [-0.1229],
+        [-0.0896],
+        [-0.2659],
+        [-0.1368],
+        [-0.0990],
+        [-0.1736],
+        [-0.2403],
+        [-0.1999],
+        [-0.0995]], grad_fn=&lt;AddmmBackward0&gt;)
 </pre></div>
 </div>
 </div>
@@ -559,10 +565,82 @@ Layer 2 outputs using pytorch and equation are same: True
 </div>
 <div class="admonition note">
 <p class="admonition-title">Note</p>
-<p>When implementing neural networks using any framework, such as Pytorch, Keras, TensorFlow, etc., it’s important to understand the inputs and outputs specific to that framework. This article will focus on PyTorch.</p>
+<p>When implementing neural networks using any framework, such as PyTorch, Keras, TensorFlow, etc., it’s important to understand the inputs and outputs specific to that framework. This article will focus on PyTorch.</p>
 </div>
 <p>From PyTorch documentation we find the input and output specification of linear layer <code class="docutils literal notranslate"><span class="pre">nn.Linear</span></code> as input: <span class="math notranslate nohighlight">\((*, H_{in})\)</span> and output: <span class="math notranslate nohighlight">\((*, H_{out})\)</span>. <span class="math notranslate nohighlight">\(H_{in}\)</span> and <span class="math notranslate nohighlight">\(H_{out}\)</span> are the input and output dimensions of a layer. According to the above example task for the first layer <span class="math notranslate nohighlight">\(H_{in}=5\)</span> and <span class="math notranslate nohighlight">\(H_{out}=8\)</span>. The <span class="math notranslate nohighlight">\(*\)</span> symbol means that whatever many of <span class="math notranslate nohighlight">\(H_{in}\)</span> dimensional instances we feed into the linear layer we get the same number of <span class="math notranslate nohighlight">\(H_{out}\)</span> dimensional outputs. The <span class="math notranslate nohighlight">\(*\)</span> depends on the batch size (the batch size is the number of instances we want to process at a time). For a batch size of 15 the inputs will be <span class="math notranslate nohighlight">\((15, 5)\)</span> and outputs of the layer will be <span class="math notranslate nohighlight">\((15, 8)\)</span>.</p>
 </section>
+</section>
+<section id="what-is-sequence-data-anyway">
+<h2>What is sequence data anyway?<a class="headerlink" href="#what-is-sequence-data-anyway" title="Link to this heading">#</a></h2>
+<p><strong>Difference between - input dimension, sequence length and batch size.</strong></p>
+<p>LSTM models process sequence data. Sequence data refers to <strong>any data where the order of instances is important</strong>. Text data, which is often used to explain LSTM models, is a prime example of sequence data. The order of words in a sentence can significantly influence its meaning. For instance, the same words can convey different meanings based on their context or position. Time series data, where observations are collected with timestamps, is another example of sequence data. The timestamps establish the sequence of the observations.</p>
+<p>Let’s consider a dataset <span class="math notranslate nohighlight">\(\mathbf X\)</span> consisting of <span class="math notranslate nohighlight">\(n_S\)</span> sequences. Each sequence <span class="math notranslate nohighlight">\(\mathbf X^{&lt;s&gt;} \in \mathbf X\)</span> is made up of <span class="math notranslate nohighlight">\(n_E\)</span> elements. Notice the <span class="math notranslate nohighlight">\(\_^{&lt;&gt;}\)</span> notation in sequences which is different from <span class="math notranslate nohighlight">\(\_^{()}\)</span>. We use <span class="math notranslate nohighlight">\(\_^{(i)}\)</span> to indicate the <span class="math notranslate nohighlight">\(i\)</span>-th instance in a flat dataset. Each element <span class="math notranslate nohighlight">\(\mathbf x_e^{&lt;s&gt;}|(s=1,2,\dots,n_S)\)</span> of a sequence <span class="math notranslate nohighlight">\(\mathbf X^{&lt;s&gt;} \in \mathbf X\)</span> consists of <span class="math notranslate nohighlight">\(n_X\)</span> real numbers, meaning <span class="math notranslate nohighlight">\(\mathbf x_e^{&lt;s&gt;}\)</span> is a <span class="math notranslate nohighlight">\(n_X\)</span> dimensional vector.</p>
+<p>In sequence data, both the length of the sequence <span class="math notranslate nohighlight">\(\mathbf X^{&lt;s&gt;}\)</span>, <span class="math notranslate nohighlight">\(n_E\)</span> in our notation, and the length of each element <span class="math notranslate nohighlight">\(\mathbf x_e^{&lt;s&gt;}\)</span>, <span class="math notranslate nohighlight">\(n_X\)</span> in our notation, within the sequence are important considerations. Remember that each input must be a sequence of <span class="math notranslate nohighlight">\(n_E\)</span> elements, with each element being a vector of a certain length <span class="math notranslate nohighlight">\(n_X\)</span>.</p>
+<p><span class="math notranslate nohighlight">\(\mathbf X = [\mathbf X^{&lt;1&gt;}, \mathbf X^{&lt;2&gt;},\dots, \mathbf X^{&lt;n_S&gt;}]\)</span></p>
+<p><span class="math notranslate nohighlight">\(\mathbf X^{&lt;s&gt;} = [\mathbf x^{&lt;s&gt;}_1, \mathbf x^{&lt;s&gt;}_2, \dots, \mathbf x^{&lt;s&gt;}_{n_E}]\)</span></p>
+<p><span class="math notranslate nohighlight">\(\mathbf X^{&lt;s&gt;} = [\mathbf X^{&lt;s&gt;(1)}, \mathbf X^{&lt;s&gt;(2)}, \dots, \mathbf X^{&lt;s&gt;(n_E)}]\)</span></p>
+<p><span class="math notranslate nohighlight">\(\mathbf X^{&lt;s&gt;} = [\mathbf X^{&lt;s&gt;}_1, \mathbf X^{&lt;s&gt;}_2, \dots, \mathbf X^{&lt;s&gt;}_{n_E}]\)</span></p>
+<p><span class="math notranslate nohighlight">\(\mathbf x_e^{&lt;s&gt;}=[x^{&lt;s&gt;}_{e1}, x^{&lt;s&gt;}_{e2}, \dots, x^{&lt;s&gt;}_{en_X}]\)</span></p>
+<p>Inputs to an LSTM layer can be batched or unbatched. Unbatched inputs require a 2D tensor of shape <span class="math notranslate nohighlight">\((n_E, n_X)\)</span>, meaning there are <span class="math notranslate nohighlight">\(n_E\)</span> elements each with <span class="math notranslate nohighlight">\(n_X\)</span> values. Batched inputs, on the other hand, are a collection of sequences. The shape of batched inputs is similar to the shape of our dataset <span class="math notranslate nohighlight">\(\mathbf X\)</span> <span class="math notranslate nohighlight">\((b_S, n_E, n_X)\)</span>, indicating that there are <span class="math notranslate nohighlight">\(b_S\)</span> sequences <span class="math notranslate nohighlight">\(\mathbf X^{&lt;1&gt;}, \dots , \mathbf X^{&lt;b_S&gt;}\)</span>, and each <span class="math notranslate nohighlight">\(\mathbf X^{&lt;s&gt;}\)</span> is a <span class="math notranslate nohighlight">\((n_E, n_X)\)</span> dimensional tensor. Usually, <span class="math notranslate nohighlight">\(b_S&lt;n_S\)</span>. We call <span class="math notranslate nohighlight">\(b_S\)</span> the <strong>batch size</strong>.</p>
+<div class="pst-scrollable-table-container"><table class="table">
+<thead>
+<tr class="row-odd"><th class="head"><p>Symbol</p></th>
+<th class="head"><p>Dimension</p></th>
+<th class="head"><p>Definition</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf X\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((n_S, n_E, n_X)\)</span></p></td>
+<td><p>A data set consisting of <span class="math notranslate nohighlight">\(n_S\)</span> sequences of length <span class="math notranslate nohighlight">\(n_E\)</span>. Each element in a sequence in <span class="math notranslate nohighlight">\(\mathbf X\)</span> is <span class="math notranslate nohighlight">\(n_X\)</span> dimensional.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(n_S\)</span></p></td>
+<td><p>1</p></td>
+<td><p>Number of sequences in the dataset.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(n_E\)</span></p></td>
+<td><p>1</p></td>
+<td><p>Number of elements in each sequence. We call this the sequence length.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(n_X\)</span></p></td>
+<td><p>1</p></td>
+<td><p>Number of values in each element. We call this the input dimension or the input size.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(b_S\)</span></p></td>
+<td><p>1</p></td>
+<td><p>Number of sequences in a batch. We call this the batch size.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(\mathbf X^{&lt;s&gt;}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((n_E, n_X)\)</span></p></td>
+<td><p>The <span class="math notranslate nohighlight">\(s\)</span>-th sequence in our dataset.</p></td>
+</tr>
+<tr class="row-even"><td><p><span class="math notranslate nohighlight">\(\mathbf x_e^{&lt;s&gt;}\)</span></p></td>
+<td><p><span class="math notranslate nohighlight">\((1, n_X)\)</span></p></td>
+<td><p>The <span class="math notranslate nohighlight">\(e\)</span>-th element of the <span class="math notranslate nohighlight">\(s\)</span>-th sequence.</p></td>
+</tr>
+<tr class="row-odd"><td><p><span class="math notranslate nohighlight">\(x^{&lt;s&gt;}_{ei}\)</span></p></td>
+<td><p>1</p></td>
+<td><p>A real value corresponding to the <span class="math notranslate nohighlight">\(i\)</span>-th dimension of the <span class="math notranslate nohighlight">\(e\)</span>-th element of the <span class="math notranslate nohighlight">\(s\)</span>-th sequence.</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>Let’s see two examples of sequence data using our notation.</p>
+<section id="example-text-data">
+<h3>Example (text data)<a class="headerlink" href="#example-text-data" title="Link to this heading">#</a></h3>
+<p>The IMDB dataset contains 50,000 movie reviews, labeled as positive or negative. Each review is a sequence of words, and the machine learning task is to predict the sentiment of the review. What are the <span class="math notranslate nohighlight">\(n_S\)</span>, <span class="math notranslate nohighlight">\(n_E\)</span>, and <span class="math notranslate nohighlight">\(n_X\)</span>?</p>
+<p>Each review is a sequence of words i.e., there are 50,000 sequences in the dataset (<span class="math notranslate nohighlight">\(n_S = 50000\)</span>). Each review has a certain number of words. Let’s restrict the number of words in the reviews to be 100 i.e., if a review has more than 100 words, we ignore the rest and if it has less than 100 words we add a special marker called <code class="docutils literal notranslate"><span class="pre">pad</span></code>. This gives the sequence length <span class="math notranslate nohighlight">\(n_E = 100\)</span>. We cannot use “words” as input to our neural net. We first need to convert the words to a numeric representation. The representations are known as word embeddings. After the transformation of the words to numbers, we get certain dimensional vectors for each word. This embedding dimension is our <span class="math notranslate nohighlight">\(n_X\)</span>. If we choose the embedding dimension to be 512 then <span class="math notranslate nohighlight">\(n_X=512\)</span>. To summarize, <span class="math notranslate nohighlight">\(\mathbf X \in \mathbb R^{50000\times100\times512}\)</span> includes 50000 reviews, <span class="math notranslate nohighlight">\(\mathbf X^{&lt;s&gt;} \in \mathbb R^{100\times512}\)</span>, <span class="math notranslate nohighlight">\(\mathbf x_e^{&lt;s&gt;} \in \mathbb R^{100}\)</span> and <span class="math notranslate nohighlight">\(x_{ei}^{&lt;s&gt;} \in \mathbb R\)</span> is the actual number corresponding to the <span class="math notranslate nohighlight">\(i\)</span>-th embedding dimension of the <span class="math notranslate nohighlight">\(e\)</span>-th word in the <span class="math notranslate nohighlight">\(s\)</span>-th review. The batch size <span class="math notranslate nohighlight">\(b_S\)</span> depends on the developer.</p>
+</section>
+<section id="example-non-text-data">
+<h3>Example (non text data)<a class="headerlink" href="#example-non-text-data" title="Link to this heading">#</a></h3>
+<p>The <a class="reference external" href="https://archive.ics.uci.edu/ml/machine-learning-databases/00356/daily-min-temperatures.csv">Daily Minimum Temperatures in Melbourne</a> dataset contains daily minimum temperatures in Melbourne, Australia, recorded over 10 years. Each data point is a temperature reading, and the machine learning task is to predict future temperatures based on past readings. Each temperature reading is part of a time series. The value at each time step depends on previous values.</p>
+<p>For 10 years, we have roughly 3650 records. If we consider the prediction task is to predict the next month’s average temperature based on past months’ temperatures, then we have <span class="math notranslate nohighlight">\(n_S = 1216\)</span> sequences. Each sequence <span class="math notranslate nohighlight">\(\mathbf X^{&lt;s&gt;}\)</span> has 30 elements, i.e., <span class="math notranslate nohighlight">\(n_E=30\)</span>. Each element <span class="math notranslate nohighlight">\(\mathbf x_e^{&lt;s&gt;}\)</span> has the corresponding temperature, i.e., <span class="math notranslate nohighlight">\(n_X=1\)</span>. For this example, <span class="math notranslate nohighlight">\(\mathbf x_e^{&lt;s&gt;}=x_{ei}^{&lt;s&gt;}\)</span> as we only have 1D observations. Again, batch size <span class="math notranslate nohighlight">\(b_S\)</span> depends on the developer.</p>
+</section>
+</section>
+<section id="architectures-ref-figure-c">
+<h2>Architectures (ref: <a class="reference internal" href="#figure1-rnn"><span class="std std-ref">Figure</span></a> (c))<a class="headerlink" href="#architectures-ref-figure-c" title="Link to this heading">#</a></h2>
+<p>Both of the above examples use the <strong>many-to-one</strong> architecture (<a class="reference internal" href="#figure1-rnn"><span class="std std-ref">Figure</span></a>(c)) because they involve processing a sequence of inputs to produce a single output. For the sentiment analysis task, the input is a sequence of words (many), and the output is a single sentiment label (one). The model processes the entire sequence of words to predict whether the review is positive or negative. For the second example, the input is a sequence of temperature readings over 30 days (many), and the output is the temperature for the next day (one). The model uses the sequence of past temperatures to predict the next value.</p>
+<p>In both cases, the RNN (or LSTM) processes each sequence, maintaining a hidden state that captures the context, and finally produces a single output representing the sentiment or temperature.</p>
 </section>
 </section>
 
@@ -634,6 +712,12 @@ Layer 2 outputs using pytorch and equation are same: True
 <li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#code-example">Code example</a></li>
 </ul>
 </li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#what-is-sequence-data-anyway">What is sequence data anyway?</a><ul class="nav section-nav flex-column">
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-text-data">Example (text data)</a></li>
+<li class="toc-h3 nav-item toc-entry"><a class="reference internal nav-link" href="#example-non-text-data">Example (non text data)</a></li>
+</ul>
+</li>
+<li class="toc-h2 nav-item toc-entry"><a class="reference internal nav-link" href="#architectures-ref-figure-c">Architectures (ref: <span class="xref std std-ref">Figure</span> (c))</a></li>
 </ul>
   </nav></div>
 
