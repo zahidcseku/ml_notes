@@ -37,7 +37,7 @@ RNN and LSTM include one of the figures (or a variation of them) shown below.
 
 ```{figure} figure1.png
 ---
-name: figure1
+name: figure1_rnn
 width: 450px
 align: center
 ---
@@ -147,7 +147,61 @@ print(loop_y)
 ```
 
 ```{note}
-When implementing neural networks using any framework, such as Pytorch, Keras, TensorFlow, etc., it's important to understand the inputs and outputs specific to that framework. This article will focus on PyTorch.
+When implementing neural networks using any framework, such as PyTorch, Keras, TensorFlow, etc., it's important to understand the inputs and outputs specific to that framework. This article will focus on PyTorch.
 ```
 
 From PyTorch documentation we find the input and output specification of linear layer `nn.Linear` as input: $(*, H_{in})$ and output: $(*, H_{out})$. $H_{in}$ and $H_{out}$ are the input and output dimensions of a layer. According to the above example task for the first layer $H_{in}=5$ and $H_{out}=8$. The $*$ symbol means that whatever many of $H_{in}$ dimensional instances we feed into the linear layer we get the same number of $H_{out}$ dimensional outputs. The $*$ depends on the batch size (the batch size is the number of instances we want to process at a time). For a batch size of 15 the inputs will be $(15, 5)$ and outputs of the layer will be $(15, 8)$.
+
+
+## What is sequence data anyway?
+**Difference between - input dimension, sequence length and batch size.** 
+
+LSTM models process sequence data. Sequence data refers to **any data where the order of instances is important**. Text data, which is often used to explain LSTM models, is a prime example of sequence data. The order of words in a sentence can significantly influence its meaning. For instance, the same words can convey different meanings based on their context or position. Time series data, where observations are collected with timestamps, is another example of sequence data. The timestamps establish the sequence of the observations.
+
+Let's consider a dataset $\mathbf X$ consisting of $n_S$ sequences. Each sequence $\mathbf X^{<s>} \in \mathbf X$ is made up of $n_E$ elements. Notice the $\_^{<>}$ notation in sequences which is different from $\_^{()}$. We use $\_^{(i)}$ to indicate the $i$-th instance in a flat dataset. Each element $\mathbf x_e^{<s>}|(s=1,2,\dots,n_S)$ of a sequence $\mathbf X^{<s>} \in \mathbf X$ consists of $n_X$ real numbers, meaning $\mathbf x_e^{<s>}$ is a $n_X$ dimensional vector.
+
+In sequence data, both the length of the sequence $\mathbf X^{<s>}$, $n_E$ in our notation, and the length of each element $\mathbf x_e^{<s>}$, $n_X$ in our notation, within the sequence are important considerations. Remember that each input must be a sequence of $n_E$ elements, with each element being a vector of a certain length $n_X$.
+
+
+$\mathbf X = [\mathbf X^{<1>}, \mathbf X^{<2>},\dots, \mathbf X^{<n_S>}]$
+
+$\mathbf X^{<s>} = [\mathbf x^{<s>}_1, \mathbf x^{<s>}_2, \dots, \mathbf x^{<s>}_{n_E}]$
+
+$\mathbf X^{<s>} = [\mathbf X^{<s>(1)}, \mathbf X^{<s>(2)}, \dots, \mathbf X^{<s>(n_E)}]$
+
+$\mathbf X^{<s>} = [\mathbf X^{<s>}_1, \mathbf X^{<s>}_2, \dots, \mathbf X^{<s>}_{n_E}]$
+
+$\mathbf x_e^{<s>}=[x^{<s>}_{e1}, x^{<s>}_{e2}, \dots, x^{<s>}_{en_X}]$
+
+Inputs to an LSTM layer can be batched or unbatched. Unbatched inputs require a 2D tensor of shape $(n_E, n_X)$, meaning there are $n_E$ elements each with $n_X$ values. Batched inputs, on the other hand, are a collection of sequences. The shape of batched inputs is similar to the shape of our dataset $\mathbf X$ $(b_S, n_E, n_X)$, indicating that there are $b_S$ sequences $\mathbf X^{<1>}, \dots , \mathbf X^{<b_S>}$, and each $\mathbf X^{<s>}$ is a $(n_E, n_X)$ dimensional tensor. Usually, $b_S<n_S$. We call $b_S$ the **batch size**. 
+
+| Symbol | Dimension | Definition |
+| --- | --- | --- |
+| $\mathbf X$ | $(n_S, n_E, n_X)$ | A data set consisting of $n_S$ sequences of length $n_E$. Each element in a sequence in $\mathbf X$ is $n_X$ dimensional.  |
+| $n_S$ | 1 | Number of sequences in the dataset. |
+| $n_E$ | 1 | Number of elements in each sequence. We call this the sequence length. |
+| $n_X$ | 1 | Number of values in each element. We call this the input dimension or the input size. |
+| $b_S$ | 1 | Number of sequences in a batch. We call this the batch size. |
+| $\mathbf X^{<s>}$ | $(n_E, n_X)$ | The $s$-th sequence in our dataset.   |
+| $\mathbf x_e^{<s>}$  | $(1, n_X)$ | The $e$-th element of the $s$-th sequence. |
+| $x^{<s>}_{ei}$ | 1 | A real value corresponding to the $i$-th dimension of the $e$-th element of the $s$-th sequence.  |
+
+Let’s see two examples of sequence data using our notation. 
+
+### Example (text data)
+The IMDB dataset contains 50,000 movie reviews, labeled as positive or negative. Each review is a sequence of words, and the machine learning task is to predict the sentiment of the review. What are the $n_S$, $n_E$, and $n_X$?
+
+Each review is a sequence of words i.e., there are 50,000 sequences in the dataset ($n_S = 50000$). Each review has a certain number of words. Let’s restrict the number of words in the reviews to be 100 i.e., if a review has more than 100 words, we ignore the rest and if it has less than 100 words we add a special marker called `pad`. This gives the sequence length $n_E = 100$. We cannot use “words” as input to our neural net. We first need to convert the words to a numeric representation. The representations are known as word embeddings. After the transformation of the words to numbers, we get certain dimensional vectors for each word. This embedding dimension is our $n_X$. If we choose the embedding dimension to be 512 then $n_X=512$. To summarize, $\mathbf X \in \mathbb R^{50000\times100\times512}$ includes 50000 reviews, $\mathbf X^{<s>} \in \mathbb R^{100\times512}$, $\mathbf x_e^{<s>} \in \mathbb R^{100}$ and $x_{ei}^{<s>} \in \mathbb R$ is the actual number corresponding to the $i$-th embedding dimension of the $e$-th word in the $s$-th review. The batch size $b_S$ depends on the developer.
+
+### Example (non text data)
+The [Daily Minimum Temperatures in Melbourne](https://archive.ics.uci.edu/ml/machine-learning-databases/00356/daily-min-temperatures.csv) dataset contains daily minimum temperatures in Melbourne, Australia, recorded over 10 years. Each data point is a temperature reading, and the machine learning task is to predict future temperatures based on past readings. Each temperature reading is part of a time series. The value at each time step depends on previous values.
+
+For 10 years, we have roughly 3650 records. If we consider the prediction task is to predict the next month's average temperature based on past months' temperatures, then we have $n_S = 1216$ sequences. Each sequence $\mathbf X^{<s>}$ has 30 elements, i.e., $n_E=30$. Each element $\mathbf x_e^{<s>}$ has the corresponding temperature, i.e., $n_X=1$. For this example, $\mathbf x_e^{<s>}=x_{ei}^{<s>}$ as we only have 1D observations. Again, batch size $b_S$ depends on the developer.
+
+
+## Architectures (ref: {ref}`Figure <figure1_rnn>` (c))
+
+Both of the above examples use the **many-to-one** architecture ({ref}`Figure <figure1_rnn>`(c)) because they involve processing a sequence of inputs to produce a single output. For the sentiment analysis task, the input is a sequence of words (many), and the output is a single sentiment label (one). The model processes the entire sequence of words to predict whether the review is positive or negative. For the second example, the input is a sequence of temperature readings over 30 days (many), and the output is the temperature for the next day (one). The model uses the sequence of past temperatures to predict the next value.
+
+In both cases, the RNN (or LSTM) processes each sequence, maintaining a hidden state that captures the context, and finally produces a single output representing the sentiment or temperature.
+
